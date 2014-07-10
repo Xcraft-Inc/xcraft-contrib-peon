@@ -55,7 +55,7 @@ exports.fileFromUri = function (uri, root, callbackDone)
     break;
 
   default:
-    console.log (uriObj.protocol + ' not supported');
+    console.warn (uriObj.protocol + ' not supported');
     callbackDone (uri);
     break;
   }
