@@ -1,31 +1,15 @@
 'use strict';
 
-module.exports = function (srcUri, destRoot)
+var utils = require ('../../utils.js');
+
+module.exports = function (srcUri, root, callbackDone)
 {
-  var path        = require ('path');
-  var url         = require ('url');
-  var zogFs       = require ('zogFs');
-  var zogPlatform = require ('zogPlatform');
+  var zogFs = require ('zogFs');
 
-  var uriObj = url.parse (srcUri);
-
-  switch (uriObj.protocol)
+  utils.fileFromUri (srcUri, root, function (file)
   {
-  case 'http:':
-  case 'https:':
-    console.log (uriObj.protocol + ' support not implemented');
-    break;
-
-  case 'file:':
-    var srcPath = uriObj.pathname;
-    if (zogPlatform.getOs () === 'win')
-      srcPath = path.normalize (srcPath.replace (/^\/([a-z]:)/, '$1'));
-
-    zogFs.cpdir (srcPath, destRoot);
-    break;
-
-  default:
-    console.log (uriObj.protocol + ' not supported');
-    break;
-  }
+    zogFs.cpdir (file, root);
+    if (callbackDone)
+      callbackDone (true);
+  });
 };
