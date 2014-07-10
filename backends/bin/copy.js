@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (srcUri, destPath)
+module.exports = function (srcUri, destRoot)
 {
   var path        = require ('path');
   var url         = require ('url');
@@ -21,7 +21,7 @@ module.exports = function (srcUri, destPath)
     if (zogPlatform.getOs () === 'win')
       srcPath = path.normalize (srcPath.replace (/^\/([a-z]:)/, '$1'));
 
-    zogFs.cpdir (srcPath, destPath);
+    zogFs.cpdir (srcPath, destRoot);
     break;
 
   default:
