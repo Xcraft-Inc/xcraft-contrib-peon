@@ -2,7 +2,7 @@
 
 var path = require ('path');
 
-var fileFromHttp = function (uriObj, destPath, callbackDone)
+var resFromHttp = function (uriObj, destPath, callbackDone)
 {
   var zogHttp = require ('zogHttp');
 
@@ -32,6 +32,11 @@ var fileFromHttp = function (uriObj, destPath, callbackDone)
   });
 };
 
+var fileFromRes = function (res)
+{
+  return res;
+};
+
 exports.fileFromUri = function (uri, root, callbackDone)
 {
   var url         = require ('url');
@@ -44,14 +49,20 @@ exports.fileFromUri = function (uri, root, callbackDone)
   case 'http:':
   case 'https:':
     var destPath = path.join (root, 'cache');
-    fileFromHttp (uriObj, destPath, callbackDone);
+    resFromHttp (uriObj, destPath, function (res)
+    {
+      var file = fileFromRes (res);
+      callbackDone (file);
+    });
     break;
 
   case 'file:':
     var srcPath = uriObj.pathname;
     if (zogPlatform.getOs () === 'win')
       srcPath = path.normalize (srcPath.replace (/^\/([a-zA-Z]:)/, '$1'));
-    callbackDone (srcPath);
+
+    var file = fileFromRes (srcPath);
+    callbackDone (file);
     break;
 
   default:
