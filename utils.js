@@ -50,7 +50,7 @@ exports.fileFromUri = function (uri, root, callbackDone)
   case 'file:':
     var srcPath = uriObj.pathname;
     if (zogPlatform.getOs () === 'win')
-      srcPath = path.normalize (srcPath.replace (/^\/([a-z]:)/, '$1'));
+      srcPath = path.normalize (srcPath.replace (/^\/([a-zA-Z]:)/, '$1'));
     callbackDone (srcPath);
     break;
 
