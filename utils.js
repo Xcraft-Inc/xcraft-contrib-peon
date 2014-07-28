@@ -39,7 +39,7 @@ var fileFromZip = function (zip, destPath, callbackDone)
 
   fs.createReadStream (zip).pipe (unzip.Extract ({ path: destPath }).on ('error', function (err)
   {
-    zogLog.err (err);
+    console.error (err);
   }).on ('close', function ()
   {
     callbackDone (destPath);
