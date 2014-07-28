@@ -32,9 +32,31 @@ var resFromHttp = function (uriObj, destPath, callbackDone)
   });
 };
 
-var fileFromRes = function (res)
+var fileFromZip = function (zip, destPath, callbackDone)
 {
-  return res;
+  var fs    = require ('fs');
+  var unzip = require ('unzip');
+
+  fs.createReadStream (zip).pipe (unzip.Extract ({ path: destPath }).on ('finish', function ()
+  {
+    callbackDone (destPath);
+  }));
+};
+
+var fileFromRes = function (res, destPath, callbackDone)
+{
+  var ext = path.extname (res).replace (/\./g, '');
+
+  switch (ext)
+  {
+  case 'zip':
+    fileFromZip (res, destPath, callbackDone);
+    break;
+
+  default:
+    callbackDone (res);
+    break;
+  }
 };
 
 exports.fileFromUri = function (uri, root, callbackDone)
@@ -43,6 +65,7 @@ exports.fileFromUri = function (uri, root, callbackDone)
   var zogPlatform = require ('zogPlatform');
 
   var uriObj = url.parse (uri);
+  var tmpPath = path.join (root, 'tmp');
 
   switch (uriObj.protocol)
   {
@@ -51,8 +74,10 @@ exports.fileFromUri = function (uri, root, callbackDone)
     var destPath = path.join (root, 'cache');
     resFromHttp (uriObj, destPath, function (res)
     {
-      var file = fileFromRes (res);
-      callbackDone (file);
+      fileFromRes (res, tmpPath, function (file)
+      {
+        callbackDone (file);
+      });
     });
     break;
 
@@ -61,8 +86,10 @@ exports.fileFromUri = function (uri, root, callbackDone)
     if (zogPlatform.getOs () === 'win')
       srcPath = path.normalize (srcPath.replace (/^\/([a-zA-Z]:)/, '$1'));
 
-    var file = fileFromRes (srcPath);
-    callbackDone (file);
+    fileFromRes (srcPath, tmpPath, function (file)
+    {
+      callbackDone (file);
+    });
     break;
 
   default:
