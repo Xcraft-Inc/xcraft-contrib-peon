@@ -34,6 +34,8 @@ var resFromHttp = function (uriObj, destPath, callbackDone)
 
 var fileFromZip = function (zip, destPath, callbackDone)
 {
+  console.log ('unzip %s to %s', zip, destPath);
+
   var fs    = require ('fs');
   var unzip = require ('unzip');
 
