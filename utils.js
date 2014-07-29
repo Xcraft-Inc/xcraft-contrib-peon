@@ -55,7 +55,12 @@ var fileFromRes = function (res, destPath, callbackDone)
   switch (ext)
   {
   case 'zip':
-    fileFromZip (res, destPath, callbackDone);
+    fileFromZip (res, destPath, function (file)
+    {
+      /* The zip file is no longer necessary, we drop it. */
+      fs.unlinkSync (res);
+      callbackDone (file);
+    });
     break;
 
   default:
