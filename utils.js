@@ -37,15 +37,14 @@ var fileFromZip = function (zip, destPath, callbackDone)
 {
   console.log ('unzip %s to %s', zip, destPath);
 
-  var unzip = require ('unzip');
-
-  fs.createReadStream (zip).pipe (unzip.Extract ({ path: destPath }).on ('error', function (err)
+  var targz = require ('tar.gz');
+  var compress = new targz ().extract (zip, destPath, function (err)
   {
-    console.error (err);
-  }).on ('close', function ()
-  {
-    callbackDone (destPath);
-  }));
+    if (err)
+      console.error (err);
+    else
+      callbackDone (zip);
+  });
 };
 
 var fileFromRes = function (res, destPath, callbackDone)
@@ -54,7 +53,7 @@ var fileFromRes = function (res, destPath, callbackDone)
 
   switch (ext)
   {
-  case 'zip':
+  case 'gz':
     fileFromZip (res, destPath, function (file)
     {
       /* The zip file is no longer necessary, we drop it. */
