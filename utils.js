@@ -70,7 +70,6 @@ exports.fileFromUri = function (uri, root, callbackDone)
   var zogPlatform = require ('zogPlatform');
 
   var uriObj = url.parse (uri);
-  var tmpPath = path.join (root, 'tmp');
 
   switch (uriObj.protocol)
   {
@@ -79,7 +78,7 @@ exports.fileFromUri = function (uri, root, callbackDone)
     var destPath = path.join (root, 'cache');
     resFromHttp (uriObj, destPath, function (res)
     {
-      fileFromRes (res, tmpPath, function (file)
+      fileFromRes (res, destPath, function (file)
       {
         callbackDone (file);
       });
@@ -91,7 +90,7 @@ exports.fileFromUri = function (uri, root, callbackDone)
     if (zogPlatform.getOs () === 'win')
       srcPath = path.normalize (srcPath.replace (/^\/([a-zA-Z]:)/, '$1'));
 
-    fileFromRes (srcPath, tmpPath, function (file)
+    fileFromRes (srcPath, destPath, function (file)
     {
       callbackDone (file);
     });
