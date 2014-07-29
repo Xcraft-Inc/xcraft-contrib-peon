@@ -6,6 +6,9 @@ module.exports = function (srcUri, root, extra, callbackDone)
 {
   var srcFile = utils.fileFromUri (srcUri, root, function (file)
   {
+    if (!extra.hasOwnProperty ('bin'))
+      return;
+
     var path       = require ('path');
     var zogProcess = require ('zogProcess');
 
