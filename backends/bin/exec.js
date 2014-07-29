@@ -25,9 +25,11 @@ module.exports = function (srcUri, root, share, extra, callbackDone)
 {
   var fs = require ('fs');
 
-  if (fs.existsSync (path.join (share, 'cache')))
+  var cache = path.join (share, 'cache');
+
+  if (fs.existsSync (cache))
   {
-    spawn (share, extra, callbackDone);
+    spawn (cache, extra, callbackDone);
     return;
   }
 
