@@ -6,7 +6,14 @@ module.exports = function (srcUri, root, extra, callbackDone)
 {
   var srcFile = utils.fileFromUri (srcUri, root, function (file)
   {
-    /* TODO: spawn file */
-    callbackDone (false);
+    var path       = require ('path');
+    var zogProcess = require ('zogProcess');
+
+    var bin = path.join (file, extra.bin);
+    var args = extra.args.split (' ');
+
+    console.log ('spawn %s %s', bin, extra.args);
+
+    zogProcess.spawn (bin, args, callbackDone);
   });
 };
