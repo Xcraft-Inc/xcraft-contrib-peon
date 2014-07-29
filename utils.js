@@ -1,6 +1,7 @@
 'use strict';
 
 var path = require ('path');
+var fs   = require ('fs');
 
 var resFromHttp = function (uriObj, destPath, callbackDone)
 {
@@ -36,7 +37,6 @@ var fileFromZip = function (zip, destPath, callbackDone)
 {
   console.log ('unzip %s to %s', zip, destPath);
 
-  var fs    = require ('fs');
   var unzip = require ('unzip');
 
   fs.createReadStream (zip).pipe (unzip.Extract ({ path: destPath }).on ('error', function (err)
