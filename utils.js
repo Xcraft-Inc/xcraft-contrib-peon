@@ -64,7 +64,7 @@ var fileFromRes = function (res, destPath, callbackDone)
   }
 };
 
-exports.fileFromUri = function (uri, root, callbackDone)
+exports.fileFromUri = function (uri, share, callbackDone)
 {
   var url         = require ('url');
   var zogPlatform = require ('zogPlatform');
@@ -75,7 +75,7 @@ exports.fileFromUri = function (uri, root, callbackDone)
   {
   case 'http:':
   case 'https:':
-    var destPath = path.join (root, 'cache');
+    var destPath = path.join (share, 'cache');
     resFromHttp (uriObj, destPath, function (res)
     {
       fileFromRes (res, destPath, function (file)

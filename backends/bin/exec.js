@@ -2,9 +2,9 @@
 
 var utils = require ('../../utils.js');
 
-module.exports = function (srcUri, root, extra, callbackDone)
+module.exports = function (srcUri, root, share, extra, callbackDone)
 {
-  var srcFile = utils.fileFromUri (srcUri, root, function (file)
+  var srcFile = utils.fileFromUri (srcUri, share, function (file)
   {
     if (!extra.hasOwnProperty ('bin'))
       return;
