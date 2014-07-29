@@ -6,7 +6,14 @@ module.exports = function (srcUri, root, extra, callbackDone)
 {
   var zogFs = require ('zogFs');
 
-  utils.fileFromUri (srcUri, root, function (file)
+  if (!root)
+  {
+    console.warn ('fixme: you can\'t copy without root directory');
+    callbackDone (false);
+    return;
+  }
+
+  utils.fileFromUri (srcUri, share, function (file)
   {
     zogFs.cpdir (file, root);
     if (callbackDone)
