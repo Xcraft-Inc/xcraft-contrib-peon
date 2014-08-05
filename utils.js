@@ -17,6 +17,9 @@ var resFromHttp = function (uriObj, destPath, callbackDone)
       callbackDone (outputFile);
   }, function (progress, total)
   {
+    if (!total)
+      return;
+
     var currentProgress = parseInt (progress / total * 100);
     if (currentProgress != lastProgress && !(currentProgress % 2))
     {
