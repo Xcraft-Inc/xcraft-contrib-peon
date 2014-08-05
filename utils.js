@@ -38,7 +38,7 @@ var resFromHttp = function (uriObj, destPath, callbackDone)
 
 var resFromGit = function (gitUri, deskPath, callbackDone)
 {
-  callbackDone (false);
+  callbackDone (gitUri);
 };
 
 var fileFromZip = function (zip, destPath, callbackDone)
