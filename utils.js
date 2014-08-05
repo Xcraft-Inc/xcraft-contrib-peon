@@ -38,6 +38,8 @@ var resFromHttp = function (uriObj, destPath, callbackDone)
 
 var resFromGit = function (gitUri, destPath, callbackDone)
 {
+  var zogSCM = require ('zogSCM').git;
+
   callbackDone (gitUri);
 };
 
