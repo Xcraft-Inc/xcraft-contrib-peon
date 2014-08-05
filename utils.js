@@ -36,6 +36,11 @@ var resFromHttp = function (uriObj, destPath, callbackDone)
   });
 };
 
+var resFromGit = function (gitUri, deskPath, callbackDone)
+{
+  callbackDone (false);
+};
+
 var fileFromZip = function (zip, destPath, callbackDone)
 {
   console.log ('unzip %s to %s', zip, destPath);
@@ -83,6 +88,19 @@ exports.fileFromUri = function (uri, share, callbackDone)
   case 'http:':
   case 'https:':
     var destPath = path.join (share, 'cache');
+
+    if (/\.git$/.test (uriObj.pathname))
+    {
+      resFromGit (uri, destPath, function (res)
+      {
+        fileFromRes (res, destPath, function (file)
+        {
+          callbackDone (file);
+        });
+      });
+      break;
+    }
+
     resFromHttp (uriObj, destPath, function (res)
     {
       fileFromRes (res, destPath, function (file)
