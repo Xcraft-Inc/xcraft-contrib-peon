@@ -38,9 +38,13 @@ var resFromHttp = function (uriObj, destPath, callbackDone)
 
 var resFromGit = function (gitUri, destPath, callbackDone)
 {
-  var zogSCM = require ('zogSCM').git;
+  var git = require ('zogSCM').git;
 
-  callbackDone (gitUri);
+  git.clone (gitUri, destPath, function (done)
+  {
+    if (done)
+      callbackDone (destPath);
+  });
 };
 
 var fileFromZip = function (zip, destPath, callbackDone)
