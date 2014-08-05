@@ -33,7 +33,7 @@ module.exports = function (srcUri, root, share, extra, callbackDone)
     return;
   }
 
-  var srcFile = utils.fileFromUri (srcUri, share, function (dir)
+  utils.fileFromUri (srcUri, share, function (dir)
   {
     spawn (dir, extra, callbackDone);
   });
