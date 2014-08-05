@@ -36,7 +36,7 @@ var resFromHttp = function (uriObj, destPath, callbackDone)
   });
 };
 
-var resFromGit = function (gitUri, deskPath, callbackDone)
+var resFromGit = function (gitUri, destPath, callbackDone)
 {
   callbackDone (gitUri);
 };
