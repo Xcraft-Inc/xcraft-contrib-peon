@@ -5,7 +5,7 @@ var utils = require ('../../utils.js');
 
 var spawn = function (share, extra, callbackDone)
 {
-  if (!extra.hasOwnProperty ('bin'))
+  if (!extra.hasOwnProperty ('location'))
   {
     callbackDone (true);
     return;
@@ -13,7 +13,7 @@ var spawn = function (share, extra, callbackDone)
 
   var zogProcess = require ('zogProcess');
 
-  var bin = path.join (share, extra.bin);
+  var bin = path.join (share, extra.location);
   var args = extra.args.split (' ');
 
   console.log ('spawn %s %s', bin, extra.args);
