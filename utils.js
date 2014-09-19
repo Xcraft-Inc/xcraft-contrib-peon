@@ -20,7 +20,7 @@ var resFromHttp = function (uriObj, destPath, callbackDone) {
     }
 
     var currentProgress = parseInt (progress / total * 100);
-    if (currentProgress !== lastProgress && !(currentProgress % 2)) {
+    if (currentProgress !== lastProgress && (currentProgress % 2) === 0) {
       lastProgress = currentProgress;
       /* Like '%3s' */
       var strProgress = new Array (4 - lastProgress.toString ().length).join (' ') + lastProgress;
