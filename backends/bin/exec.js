@@ -3,10 +3,8 @@
 var path  = require ('path');
 var utils = require ('../../utils.js');
 
-var spawn = function (share, extra, callbackDone)
-{
-  if (!extra.hasOwnProperty ('location'))
-  {
+var spawn = function (share, extra, callbackDone) {
+  if (!extra.hasOwnProperty ('location')) {
     callbackDone (true);
     return;
   }
@@ -21,20 +19,17 @@ var spawn = function (share, extra, callbackDone)
   zogProcess.spawn (bin, args, callbackDone);
 };
 
-module.exports = function (srcUri, root, share, extra, callbackDone)
-{
+module.exports = function (srcUri, root, share, extra, callbackDone) {
   var fs = require ('fs');
 
   var cache = path.join (share, 'cache');
 
-  if (fs.existsSync (cache))
-  {
+  if (fs.existsSync (cache)) {
     spawn (cache, extra, callbackDone);
     return;
   }
 
-  utils.fileFromUri (srcUri, share, function (dir)
-  {
+  utils.fileFromUri (srcUri, share, function (dir) {
     spawn (dir, extra, callbackDone);
   });
 };

@@ -3,10 +3,8 @@
 var path  = require ('path');
 var utils = require ('../../utils.js');
 
-var make = function (share, extra, callbackDone)
-{
-  if (!extra.hasOwnProperty ('location'))
-  {
+var make = function (share, extra, callbackDone) {
+  if (!extra.hasOwnProperty ('location')) {
     callbackDone (true);
     return;
   }
@@ -14,20 +12,17 @@ var make = function (share, extra, callbackDone)
   callbackDone (false);
 };
 
-module.exports = function (srcUri, root, share, extra, callbackDone)
-{
+module.exports = function (srcUri, root, share, extra, callbackDone) {
   var fs = require ('fs');
 
   var cache = path.join (share, 'cache');
 
-  if (fs.existsSync (cache))
-  {
+  if (fs.existsSync (cache)) {
     make (share, extra, callbackDone);
     return;
   }
 
-  utils.fileFromUri (srcUri, share, function (src)
-  {
+  utils.fileFromUri (srcUri, share, function (src) { /* jshint ignore:line */
     make (share, extra, callbackDone);
   });
 };

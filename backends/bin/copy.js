@@ -2,21 +2,19 @@
 
 var utils = require ('../../utils.js');
 
-module.exports = function (srcUri, root, share, extra, callbackDone)
-{
+module.exports = function (srcUri, root, share, extra, callbackDone) {
   var zogFs = require ('zogFs');
 
-  if (!root)
-  {
+  if (!root) {
     console.warn ('fixme: you can\'t copy without root directory');
     callbackDone (false);
     return;
   }
 
-  utils.fileFromUri (srcUri, share, function (file)
-  {
+  utils.fileFromUri (srcUri, share, function (file) {
     zogFs.cpdir (file, root);
-    if (callbackDone)
+    if (callbackDone) {
       callbackDone (true);
+    }
   });
 };
