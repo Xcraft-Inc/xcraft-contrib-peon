@@ -9,7 +9,7 @@ var spawn = function (share, extra, callbackDone) {
     return;
   }
 
-  var zogProcess = require ('zogProcess');
+  var zogProcess = require ('xcraft-core-process');
 
   var bin = path.join (share, extra.location);
   var args = extra.args.split (' ');
