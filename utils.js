@@ -79,7 +79,7 @@ var fileFromRes = function (res, destPath, callbackDone) {
 
 exports.fileFromUri = function (uri, share, callbackDone) {
   var url         = require ('url');
-  var zogPlatform = require ('zogPlatform');
+  var zogPlatform = require ('xcraft-core-platform');
 
   var destPath = path.join (share, 'cache');
 
