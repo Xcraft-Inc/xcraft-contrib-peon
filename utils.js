@@ -4,7 +4,7 @@ var path = require ('path');
 var fs   = require ('fs');
 
 var resFromHttp = function (uriObj, destPath, callbackDone) {
-  var zogHttp = require ('zogHttp');
+  var zogHttp = require ('xcraft-core-http');
 
   var lastProgress = -1;
   var outputFile = path.join (destPath, path.basename (uriObj.pathname));
@@ -35,7 +35,7 @@ var resFromHttp = function (uriObj, destPath, callbackDone) {
 };
 
 var resFromGit = function (gitUri, destPath, callbackDone) {
-  var git = require ('zogSCM').git;
+  var git = require ('xcraft-core-scm').git;
 
   git.clone (gitUri, destPath, function (done) {
     if (done) {
