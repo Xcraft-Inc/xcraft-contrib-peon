@@ -1,0 +1,24 @@
+{
+  "name": "xcraft-core-peon",
+  "version": "0.1.0",
+  "description": "Xcraft 'peon' worker backends",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "xcraft",
+    "backend",
+    "worker"
+  ],
+  "repository" : {
+    "type" : "file",
+    "url" : "lib/xcraft-core-peon"
+  },
+  "author": "Mathieu Schroeter",
+  "license": "ISC",
+  "dependencies": {
+    "xcraft-core-fs" : "0.1.0"
+  },
+  "devDependencies": {}
+}

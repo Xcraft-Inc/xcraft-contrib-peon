@@ -1,7 +1,7 @@
 'use strict';
 
 var path  = require ('path');
-var zogFs = require ('zogFs');
+var zogFs = require ('xcraft-core-fs');
 
 var backendsRoot = path.join (__dirname, 'backends');
 var backends = {};
