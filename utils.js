@@ -78,8 +78,8 @@ var fileFromRes = function (res, destPath, callbackDone) {
 };
 
 exports.fileFromUri = function (uri, share, callbackDone) {
-  var url         = require ('url');
-  var zogPlatform = require ('xcraft-core-platform');
+  var url       = require ('url');
+  var xPlatform = require ('xcraft-core-platform');
 
   var destPath = path.join (share, 'cache');
 
@@ -108,7 +108,7 @@ exports.fileFromUri = function (uri, share, callbackDone) {
 
   case 'file:': {
     var srcPath = uriObj.pathname;
-    if (zogPlatform.getOs () === 'win') {
+    if (xPlatform.getOs () === 'win') {
       srcPath = path.normalize (srcPath.replace (/^\/([a-zA-Z]:)/, '$1'));
     }
 
