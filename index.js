@@ -1,14 +1,14 @@
 'use strict';
 
-var path  = require ('path');
-var zogFs = require ('xcraft-core-fs');
+var path = require ('path');
+var xFs  = require ('xcraft-core-fs');
 
 var backendsRoot = path.join (__dirname, 'backends');
 var backends = {};
-var backendsType = zogFs.lsdir (backendsRoot);
+var backendsType = xFs.lsdir (backendsRoot);
 
 backendsType.forEach (function (type) {
-  var backendsCmd = zogFs.ls (path.join (backendsRoot, type), /\.js$/);
+  var backendsCmd = xFs.ls (path.join (backendsRoot, type), /\.js$/);
 
   backends[type] = {};
   backendsCmd.forEach (function (cmd) {
