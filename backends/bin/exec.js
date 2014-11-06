@@ -9,14 +9,14 @@ var spawn = function (share, extra, callbackDone) {
     return;
   }
 
-  var zogProcess = require ('xcraft-core-process');
+  var xProcess = require ('xcraft-core-process');
 
   var bin = path.join (share, extra.location);
   var args = extra.args.split (' ');
 
   console.log ('spawn %s %s', bin, extra.args);
 
-  zogProcess.spawn (bin, args, callbackDone);
+  xProcess.spawn (bin, args, callbackDone);
 };
 
 module.exports = function (srcUri, root, share, extra, callbackDone) {
