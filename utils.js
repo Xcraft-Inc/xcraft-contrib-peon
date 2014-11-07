@@ -4,13 +4,13 @@ var path = require ('path');
 var fs   = require ('fs');
 
 var resFromHttp = function (uriObj, destPath, callbackDone) {
-  var zogHttp = require ('xcraft-core-http');
+  var xHttp = require ('xcraft-core-http');
 
   var lastProgress = -1;
   var outputFile = path.join (destPath, path.basename (uriObj.pathname));
 
   console.log ('download %s to %s', uriObj.href, outputFile);
-  zogHttp.get (uriObj.href, outputFile, function () {
+  xHttp.get (uriObj.href, outputFile, function () {
     if (callbackDone) {
       callbackDone (outputFile);
     }
