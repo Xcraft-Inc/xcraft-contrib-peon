@@ -2,19 +2,23 @@
 
 var utils = require ('../../utils.js');
 
-module.exports = function (srcUri, root, share, extra, callbackDone) {
+module.exports = function (srcUri, root, share, extra, callback) {
   var xFs = require ('xcraft-core-fs');
 
   if (!root) {
-    console.warn ('fixme: you can\'t copy without root directory');
-    callbackDone (false);
+    if (callback) {
+      callback ('fixme: you can\'t copy without root directory');
+    }
     return;
   }
 
-  utils.fileFromUri (srcUri, share, function (file) {
-    xFs.cpdir (file, root);
-    if (callbackDone) {
-      callbackDone (true);
+  utils.fileFromUri (srcUri, share, function (err, file) {
+    if (!err) {
+      xFs.cpdir (file, root);
+    }
+
+    if (callback) {
+      callback (err);
     }
   });
 };

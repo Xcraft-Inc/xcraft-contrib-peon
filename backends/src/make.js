@@ -3,26 +3,31 @@
 var path  = require ('path');
 var utils = require ('../../utils.js');
 
-var make = function (share, extra, callbackDone) {
+var make = function (share, extra, callback) {
   if (!extra.hasOwnProperty ('location')) {
-    callbackDone (true);
+    callback ();
     return;
   }
 
-  callbackDone (false);
+  /* TODO */
+  callback ('make is a stub');
 };
 
-module.exports = function (srcUri, root, share, extra, callbackDone) {
+module.exports = function (srcUri, root, share, extra, callback) {
   var fs = require ('fs');
 
   var cache = path.join (share, 'cache');
 
   if (fs.existsSync (cache)) {
-    make (share, extra, callbackDone);
+    make (share, extra, callback);
     return;
   }
 
-  utils.fileFromUri (srcUri, share, function (src) { /* jshint ignore:line */
-    make (share, extra, callbackDone);
+  utils.fileFromUri (srcUri, share, function (err, src) { /* jshint ignore:line */
+    if (err) {
+      callback (err);
+    } else {
+      make (share, extra, callback);
+    }
   });
 };

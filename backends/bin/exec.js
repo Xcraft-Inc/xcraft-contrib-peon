@@ -3,9 +3,9 @@
 var path  = require ('path');
 var utils = require ('../../utils.js');
 
-var spawn = function (share, extra, callbackDone) {
+var spawn = function (share, extra, callback) {
   if (!extra.hasOwnProperty ('location')) {
-    callbackDone (true);
+    callback ();
     return;
   }
 
@@ -16,20 +16,24 @@ var spawn = function (share, extra, callbackDone) {
 
   console.log ('spawn %s %s', bin, extra.args);
 
-  xProcess.spawn (bin, args, callbackDone);
+  xProcess.spawn (bin, args, callback);
 };
 
-module.exports = function (srcUri, root, share, extra, callbackDone) {
+module.exports = function (srcUri, root, share, extra, callback) {
   var fs = require ('fs');
 
   var cache = path.join (share, 'cache');
 
   if (fs.existsSync (cache)) {
-    spawn (cache, extra, callbackDone);
+    spawn (cache, extra, callback);
     return;
   }
 
-  utils.fileFromUri (srcUri, share, function (dir) {
-    spawn (dir, extra, callbackDone);
+  utils.fileFromUri (srcUri, share, function (err, dir) {
+    if (err) {
+      callback (err);
+    } else {
+      spawn (dir, extra, callback);
+    }
   });
 };
