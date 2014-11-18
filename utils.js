@@ -37,8 +37,10 @@ var resFromHttp = function (uriObj, destPath, callback) {
 var resFromGit = function (gitUri, destPath, callback) {
   var git = require ('xcraft-core-scm').git;
 
-  git.clone (gitUri, destPath, function (done) {
-    if (done) {
+  git.clone (gitUri, destPath, function (err) {
+    if (err) {
+      callback (err);
+    } else {
       callback (null, destPath);
     }
   });
