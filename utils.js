@@ -48,8 +48,10 @@ var fileFromZip = function (zip, destPath, callbackDone) {
   console.log ('unzip %s to %s', zip, destPath);
 
   var xExtract = require ('xcraft-core-extract');
-  xExtract.targz (zip, destPath, null, function (done) {
-    if (done) {
+  xExtract.targz (zip, destPath, null, function (err) {
+    if (err) {
+      console.error (err);
+    } else {
       callbackDone (zip);
     }
   });
