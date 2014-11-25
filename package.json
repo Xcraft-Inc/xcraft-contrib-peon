@@ -9,7 +9,8 @@
   "keywords": [
     "xcraft",
     "backend",
-    "worker"
+    "worker",
+    "peon"
   ],
   "repository" : {
     "type" : "file",
