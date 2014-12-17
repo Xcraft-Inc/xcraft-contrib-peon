@@ -10,6 +10,7 @@ var make = function (cache, extra, callback) {
   }
 
   /* TODO */
+  console.log ('cache: ' + cache);
   callback ('make is a stub');
 };
 
