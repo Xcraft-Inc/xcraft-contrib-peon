@@ -3,7 +3,7 @@
 var path  = require ('path');
 var utils = require ('../../utils.js');
 
-var spawn = function (share, extra, callback) {
+var spawn = function (cache, extra, callback) {
   if (!extra.hasOwnProperty ('location')) {
     callback ();
     return;
@@ -11,7 +11,7 @@ var spawn = function (share, extra, callback) {
 
   var xProcess = require ('xcraft-core-process');
 
-  var bin = path.join (share, extra.location);
+  var bin = path.join (cache, extra.location);
   var args = extra.args.split (' ');
 
   console.log ('spawn %s %s', bin, extra.args);
