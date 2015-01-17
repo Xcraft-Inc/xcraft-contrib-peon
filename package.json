@@ -23,6 +23,7 @@
     "xcraft-core-fs": "0.1.0",
     "xcraft-core-http": "0.1.0",
     "xcraft-core-platform": "0.1.0",
+    "xcraft-core-process": "0.1.0",
     "xcraft-core-scm": "0.1.0"
   },
   "devDependencies": {}

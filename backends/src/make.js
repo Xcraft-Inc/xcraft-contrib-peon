@@ -4,14 +4,16 @@ var path  = require ('path');
 var utils = require ('../../utils.js');
 
 var make = function (cache, extra, callback) {
+  var xProcess = require ('xcraft-core-process');
+
   if (!extra.hasOwnProperty ('location')) {
     callback ();
     return;
   }
 
   /* TODO */
-  console.log ('cache: ' + cache);
-  callback ('make is a stub');
+  console.log ('cache: ' + cache + ' ' + JSON.stringify (extra));
+  xProcess.spawn ('make', ['-C', path.join (cache, extra.location)], callback);
 };
 
 module.exports = function (srcUri, root, share, extra, callback) {
