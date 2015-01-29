@@ -60,7 +60,7 @@ var fileFromZip = function (zip, type, destPath, callback) {
     if (err) {
       callback (err);
     } else {
-      callback (null, zip);
+      callback (null, destPath);
     }
   });
 };
