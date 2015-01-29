@@ -46,11 +46,17 @@ var resFromGit = function (gitUri, destPath, callback) {
   });
 };
 
-var fileFromZip = function (zip, destPath, callback) {
+var fileFromZip = function (zip, type, destPath, callback) {
   console.log ('unzip %s to %s', zip, destPath);
 
   var xExtract = require ('xcraft-core-extract');
-  xExtract.targz (zip, destPath, null, function (err) {
+
+  if (!xExtract.hasOwnProperty (type)) {
+    callback ('unsupported zip file');
+    return;
+  }
+
+  xExtract[type] (zip, destPath, null, function (err) {
     if (err) {
       callback (err);
     } else {
@@ -64,7 +70,12 @@ var fileFromRes = function (res, destPath, callback) {
 
   switch (ext) {
   case 'gz': {
-    fileFromZip (res, destPath, function (file) {
+    fileFromZip (res, ext, destPath, function (err, file) {
+      if (err) {
+        callback (err);
+        return;
+      }
+
       /* The zip file is no longer necessary, we drop it. */
       fs.unlinkSync (res);
       callback (null, file);
