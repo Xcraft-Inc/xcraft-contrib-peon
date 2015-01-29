@@ -1,10 +1,36 @@
 'use strict';
 
+var path  = require ('path');
 var utils = require ('../../utils.js');
 
-module.exports = function (srcUri, root, share, extra, callback) {
+var copy = function (location, root, extra, callback) {
+  var fs  = require ('fs');
   var xFs = require ('xcraft-core-fs');
 
+  if (extra.hasOwnProperty ('location') && extra.location.length) {
+    location = path.join (location, extra.location);
+  }
+
+  try {
+    console.log ('copy ' + location + ' to ' + root);
+    var stats = fs.lstatSync (location);
+
+    if (stats.isFile ()) {
+      xFs.cp (location, path.join (root, path.basename (location)));
+    } else {
+      xFs.cpdir (location, root);
+    }
+  } catch (ex) {
+    if (callback) {
+      callback (ex.stack);
+    }
+    return;
+  }
+
+  callback ();
+};
+
+module.exports = function (srcUri, root, share, extra, callback) {
   if (!root) {
     if (callback) {
       callback ('fixme: you can\'t copy without root directory');
@@ -12,20 +38,14 @@ module.exports = function (srcUri, root, share, extra, callback) {
     return;
   }
 
-  utils.fileFromUri (srcUri, share, function (err, file) {
-    try {
-      if (!err) {
-        xFs.cpdir (file, root);
-      }
-    } catch (ex) {
+  utils.fileFromUri (srcUri, share, function (err, location) {
+    if (err) {
       if (callback) {
-        callback (ex.stack);
+        callback (err);
       }
       return;
     }
 
-    if (callback) {
-      callback (err);
-    }
+    copy (location, root, extra, callback);
   });
 };
