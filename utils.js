@@ -71,7 +71,7 @@ var fileFromRes = function (res, destPath, callback) {
   switch (ext) {
   case 'zip':
   case 'gz': {
-    fileFromZip (res, ext, destPath, function (err, file) {
+    fileFromZip (res, ext, destPath, function (err, dir) {
       if (err) {
         callback (err);
         return;
@@ -79,7 +79,7 @@ var fileFromRes = function (res, destPath, callback) {
 
       /* The zip file is no longer necessary, we drop it. */
       fs.unlinkSync (res);
-      callback (null, file);
+      callback (null, dir);
     });
     break;
   }
