@@ -13,8 +13,15 @@ module.exports = function (srcUri, root, share, extra, callback) {
   }
 
   utils.fileFromUri (srcUri, share, function (err, file) {
-    if (!err) {
-      xFs.cpdir (file, root);
+    try {
+      if (!err) {
+        xFs.cpdir (file, root);
+      }
+    } catch (ex) {
+      if (callback) {
+        callback (ex.stack);
+      }
+      return;
     }
 
     if (callback) {
