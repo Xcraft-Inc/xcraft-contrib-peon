@@ -4,7 +4,7 @@ var path  = require ('path');
 var utils = require ('../../utils.js');
 
 var spawn = function (cache, extra, callback) {
-  if (!extra.hasOwnProperty ('location')) {
+  if (extra.onlyPackaging) {
     callback ();
     return;
   }
