@@ -69,6 +69,7 @@ var fileFromRes = function (res, destPath, callback) {
   var ext = path.extname (res).replace (/\./g, '');
 
   switch (ext) {
+  case 'zip':
   case 'gz': {
     fileFromZip (res, ext, destPath, function (err, file) {
       if (err) {
