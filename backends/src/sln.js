@@ -1,6 +1,6 @@
 'use strict';
 
-var utils = require ('../../utils.js');
+var utils = require ('../../lib/utils.js');
 
 module.exports = function (srcUri, root, share, extra, callback) {
   utils.fileFromUri (srcUri, share, function (err, src) { /* jshint ignore:line */

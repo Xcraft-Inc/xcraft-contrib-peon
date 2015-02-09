@@ -1,7 +1,7 @@
 'use strict';
 
 var path  = require ('path');
-var utils = require ('../../utils.js');
+var utils = require ('../../lib/utils.js');
 
 var make = function (cache, extra, callback) {
   var xProcess = require ('xcraft-core-process');

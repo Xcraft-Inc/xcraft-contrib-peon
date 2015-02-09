@@ -1,7 +1,7 @@
 'use strict';
 
 var path  = require ('path');
-var utils = require ('../../utils.js');
+var utils = require ('../../lib/utils.js');
 
 var copy = function (location, root, extra, callback) {
   var fs  = require ('fs');
