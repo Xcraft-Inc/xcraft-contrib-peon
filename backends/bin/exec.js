@@ -29,7 +29,7 @@ module.exports = function (srcUri, root, share, extra, callback) {
     return;
   }
 
-  utils.fileFromUri (srcUri, share, function (err, dir) {
+  utils.prepare (srcUri, share, extra.configure, function (err, dir) {
     if (err) {
       callback (err);
     } else {

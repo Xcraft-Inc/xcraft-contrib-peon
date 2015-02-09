@@ -38,7 +38,7 @@ module.exports = function (srcUri, root, share, extra, callback) {
     return;
   }
 
-  utils.fileFromUri (srcUri, share, function (err, location) {
+  utils.prepare (srcUri, share, extra.configure, function (err, location) {
     if (err) {
       if (callback) {
         callback (err);

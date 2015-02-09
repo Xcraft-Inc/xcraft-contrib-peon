@@ -26,7 +26,7 @@ module.exports = function (srcUri, root, share, extra, callback) {
     return;
   }
 
-  utils.fileFromUri (srcUri, share, function (err, src) { /* jshint ignore:line */
+  utils.prepare (srcUri, share, extra.configure, function (err, src) { /* jshint ignore:line */
     if (err) {
       callback (err);
     } else {
