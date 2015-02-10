@@ -18,6 +18,9 @@ var make = function (cache, extra, callback) {
 };
 
 module.exports = function (srcUri, root, share, extra, callback) {
+  if (extra.onlyPackaging) {
+    delete extra.configure;
+  }
 
   utils.prepare (srcUri, share, extra.configure, function (err, src) { /* jshint ignore:line */
     if (err) {
