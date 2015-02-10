@@ -11,10 +11,18 @@ var make = function (cache, extra, callback) {
 
   var xProcess = require ('xcraft-core-process');
 
-  /* TODO */
   console.log ('cache: ' + cache + ' ' + JSON.stringify (extra));
   console.log ('make -C ' + path.join (cache, extra.location) + ' ' + extra.args);
-  xProcess.spawn ('make', ['-C', path.join (cache, extra.location), extra.args], callback);
+
+  var args = [
+    '-C', path.join (cache, extra.location)
+  ];
+
+  if (extra.args) {
+    args.push (extra.args);
+  }
+
+  xProcess.spawn ('make', args, callback);
 };
 
 module.exports = function (srcUri, root, share, extra, callback) {
