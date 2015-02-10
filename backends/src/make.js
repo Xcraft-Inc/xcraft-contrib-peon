@@ -4,12 +4,12 @@ var path  = require ('path');
 var utils = require ('../../lib/utils.js');
 
 var make = function (cache, extra, callback) {
-  var xProcess = require ('xcraft-core-process');
-
-  if (!extra.hasOwnProperty ('location')) {
+  if (extra.onlyPackaging || !extra.hasOwnProperty ('location')) {
     callback ();
     return;
   }
+
+  var xProcess = require ('xcraft-core-process');
 
   /* TODO */
   console.log ('cache: ' + cache + ' ' + JSON.stringify (extra));
