@@ -13,7 +13,7 @@ var make = function (cache, extra, callback) {
 
   /* TODO */
   console.log ('cache: ' + cache + ' ' + JSON.stringify (extra));
-  xProcess.spawn ('make', ['-C', path.join (cache, extra.location)], callback);
+  xProcess.spawn ('make', ['-C', path.join (cache, extra.location), extra.args], callback);
 };
 
 module.exports = function (srcUri, root, share, extra, callback) {
