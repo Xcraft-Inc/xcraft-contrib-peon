@@ -17,14 +17,6 @@ var make = function (cache, extra, callback) {
 };
 
 module.exports = function (srcUri, root, share, extra, callback) {
-  var fs = require ('fs');
-
-  var cache = path.join (share, 'cache');
-
-  if (fs.existsSync (cache)) {
-    make (cache, extra, callback);
-    return;
-  }
 
   utils.prepare (srcUri, share, extra.configure, function (err, src) { /* jshint ignore:line */
     if (err) {

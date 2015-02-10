@@ -20,15 +20,6 @@ var spawn = function (cache, extra, callback) {
 };
 
 module.exports = function (srcUri, root, share, extra, callback) {
-  var fs = require ('fs');
-
-  var cache = path.join (share, 'cache');
-
-  if (fs.existsSync (cache)) {
-    spawn (cache, extra, callback);
-    return;
-  }
-
   utils.prepare (srcUri, share, extra.configure, function (err, dir) {
     if (err) {
       callback (err);
