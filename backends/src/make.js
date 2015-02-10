@@ -13,6 +13,7 @@ var make = function (cache, extra, callback) {
 
   /* TODO */
   console.log ('cache: ' + cache + ' ' + JSON.stringify (extra));
+  console.log ('make -C ' + path.join (cache, extra.location) + ' ' + extra.args);
   xProcess.spawn ('make', ['-C', path.join (cache, extra.location), extra.args], callback);
 };
 
