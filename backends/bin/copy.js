@@ -33,7 +33,8 @@ var copy = function (location, root, extra, callback) {
 module.exports = function (srcUri, root, share, extra, callback) {
   if (!root) {
     if (callback) {
-      callback ('fixme: you can\'t copy without root directory');
+      console.warn ('fixme: you can\'t copy without root directory');
+      callback ();
     }
     return;
   }
