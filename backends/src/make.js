@@ -19,7 +19,7 @@ var make = function (cache, root, extra, callback) {
   ];
 
   if (extra.args) {
-    args.push (extra.args);
+    args = args.concat (extra.args);
   }
 
   /* FIXME: find a more generic way & pkg-config */
