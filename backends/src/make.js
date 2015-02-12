@@ -39,7 +39,7 @@ module.exports = function (srcUri, root, share, extra, callback) {
     delete extra.configure;
   }
 
-  utils.prepare (srcUri, share, extra, function (err, data) { /* jshint ignore:line */
+  utils.prepare (srcUri, share, extra, function (err, data) {
     if (err) {
       callback (err);
     } else {
