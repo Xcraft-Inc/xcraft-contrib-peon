@@ -3,7 +3,7 @@
 var path  = require ('path');
 var utils = require ('../../lib/utils.js');
 
-var make = function (cache, extra, callback) {
+var make = function (cache, root, extra, callback) {
   if (extra.onlyPackaging || !extra.hasOwnProperty ('location')) {
     callback ();
     return;
@@ -34,7 +34,7 @@ module.exports = function (srcUri, root, share, extra, callback) {
     if (err) {
       callback (err);
     } else {
-      make (src, extra, callback);
+      make (src, root, extra, callback);
     }
   });
 };
