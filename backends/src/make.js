@@ -23,6 +23,13 @@ var make = function (cache, root, extra, callback) {
     args.push (extra.args);
   }
 
+  /* FIXME: find a more generic way & pkg-config */
+  var wpkgRoot = process.env.WPKG_ROOTDIR;
+  var lib = path.join (wpkgRoot, 'usr/lib/');
+  var include = path.join (wpkgRoot, 'usr/include/');
+  args.push ('LDFLAGS=-L' + lib);
+  args.push ('CFLAGS=-I' + include);
+
   xProcess.spawn ('make', args, callback);
 };
 
