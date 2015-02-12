@@ -32,7 +32,7 @@ var copy = function (location, root, extra, callback) {
 
 module.exports = function (srcUri, root, share, extra, callback) {
   if ((extra.embedded && extra.onlyPackaging) || (!extra.embedded && !extra.onlyPackaging)) {
-    utils.prepare (srcUri, share, extra.configure, function (err, location) {
+    utils.prepare (srcUri, share, extra, function (err, data) {
       if (err) {
         if (callback) {
           callback (err);
@@ -40,7 +40,7 @@ module.exports = function (srcUri, root, share, extra, callback) {
         return;
       }
 
-      copy (location, root, extra, callback);
+      copy (data.location, root, data.extra, callback);
     });
   } else if (callback) {
     console.warn ('fixme: you can\'t copy without root directory');

@@ -12,19 +12,18 @@ var spawn = function (cache, extra, callback) {
   var xProcess = require ('xcraft-core-process');
 
   var bin = path.join (cache, extra.location);
-  var args = extra.args.split (' ');
 
-  console.log ('spawn %s %s', bin, extra.args);
+  console.log ('spawn %s %s', bin, extra.args.join (' '));
 
-  xProcess.spawn (bin, args, callback);
+  xProcess.spawn (bin, extra.args, callback);
 };
 
 module.exports = function (srcUri, root, share, extra, callback) {
-  utils.prepare (srcUri, share, extra.configure, function (err, dir) {
+  utils.prepare (srcUri, share, extra, function (err, data) {
     if (err) {
       callback (err);
     } else {
-      spawn (dir, extra, callback);
+      spawn (data.location, data.extra, callback);
     }
   });
 };

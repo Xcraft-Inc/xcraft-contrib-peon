@@ -38,11 +38,11 @@ module.exports = function (srcUri, root, share, extra, callback) {
     delete extra.configure;
   }
 
-  utils.prepare (srcUri, share, extra.configure, function (err, src) { /* jshint ignore:line */
+  utils.prepare (srcUri, share, extra, function (err, data) { /* jshint ignore:line */
     if (err) {
       callback (err);
     } else {
-      make (src, root, extra, callback);
+      make (data.location, root, data.extra, callback);
     }
   });
 };
