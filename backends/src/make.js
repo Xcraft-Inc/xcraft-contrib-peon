@@ -12,7 +12,6 @@ var make = function (cache, root, extra, callback) {
   var xProcess = require ('xcraft-core-process');
 
   console.log ('cache: ' + cache + ' ' + JSON.stringify (extra));
-  console.log ('make -C ' + path.join (cache, extra.location) + ' ' + extra.args);
 
   var args = [
     '-C', path.join (cache, extra.location),
@@ -29,6 +28,8 @@ var make = function (cache, root, extra, callback) {
   var include = path.join (wpkgRoot, 'usr/include/');
   args.push ('LDFLAGS=-L' + lib);
   args.push ('CFLAGS=-I' + include);
+
+  console.log ('make -C ' + path.join (cache, extra.location) + ' ' + args.join (' '));
 
   xProcess.spawn ('make', args, callback);
 };
