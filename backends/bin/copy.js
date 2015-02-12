@@ -31,22 +31,19 @@ var copy = function (location, root, extra, callback) {
 };
 
 module.exports = function (srcUri, root, share, extra, callback) {
-  if (!root) {
-    if (callback) {
-      console.warn ('fixme: you can\'t copy without root directory');
-      callback ();
-    }
-    return;
-  }
-
-  utils.prepare (srcUri, share, extra.configure, function (err, location) {
-    if (err) {
-      if (callback) {
-        callback (err);
+  if ((extra.embedded && extra.onlyPackaging) || (!extra.embedded && !extra.onlyPackaging)) {
+    utils.prepare (srcUri, share, extra.configure, function (err, location) {
+      if (err) {
+        if (callback) {
+          callback (err);
+        }
+        return;
       }
-      return;
-    }
 
-    copy (location, root, extra, callback);
-  });
+      copy (location, root, extra, callback);
+    });
+  } else if (callback) {
+    console.warn ('fixme: you can\'t copy without root directory');
+    callback ();
+  }
 };
