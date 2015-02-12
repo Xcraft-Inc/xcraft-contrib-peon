@@ -15,7 +15,8 @@ var make = function (cache, root, extra, callback) {
   console.log ('make -C ' + path.join (cache, extra.location) + ' ' + extra.args);
 
   var args = [
-    '-C', path.join (cache, extra.location)
+    '-C', path.join (cache, extra.location),
+    'all', 'install'
   ];
 
   if (extra.args) {
