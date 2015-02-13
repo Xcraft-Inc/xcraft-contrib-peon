@@ -44,7 +44,6 @@ module.exports = function (srcUri, root, share, extra, callback) {
       copy (data.location, root, data.extra, callback);
     });
   } else if (callback) {
-    console.warn ('fixme: you can\'t copy without root directory');
     callback ();
   }
 };
