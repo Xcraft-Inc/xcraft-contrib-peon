@@ -31,7 +31,8 @@ var copy = function (location, root, extra, callback) {
 };
 
 module.exports = function (srcUri, root, share, extra, callback) {
-  if ((extra.embedded && extra.onlyPackaging) || (!extra.embedded && !extra.onlyPackaging)) {
+  if ( extra.embedded &&  extra.onlyPackaging ||
+      !extra.embedded && !extra.onlyPackaging) {
     utils.prepare (srcUri, share, extra, function (err, data) {
       if (err) {
         if (callback) {
