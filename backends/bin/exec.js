@@ -15,7 +15,7 @@ var spawn = function (cache, extra, callback) {
 
   console.log ('spawn %s %s', bin, extra.args.join (' '));
 
-  xProcess.spawn (bin, extra.args, callback);
+  xProcess.spawn (bin, extra.args, {}, callback);
 };
 
 module.exports = function (srcUri, root, share, extra, callback) {

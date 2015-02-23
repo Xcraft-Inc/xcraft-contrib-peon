@@ -31,7 +31,7 @@ var make = function (cache, root, extra, callback) {
   args.push ('CFLAGS=-I' + include);
 
   console.log ('make -C ' + path.join (cache, extra.location) + ' ' + args.join (' '));
-  xProcess.spawn ('make', args, callback);
+  xProcess.spawn ('make', args, {}, callback);
 };
 
 module.exports = function (srcUri, root, share, extra, callback) {
