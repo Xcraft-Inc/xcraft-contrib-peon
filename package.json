@@ -12,9 +12,9 @@
     "worker",
     "peon"
   ],
-  "repository" : {
-    "type" : "file",
-    "url" : "lib/xcraft-core-peon"
+  "repository": {
+    "type": "file",
+    "url": "lib/xcraft-core-peon"
   },
   "author": "Mathieu Schroeter",
   "license": "MIT",
