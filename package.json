@@ -1,5 +1,5 @@
 {
-  "name": "xcraft-core-peon",
+  "name": "xcraft-contrib-peon",
   "version": "0.1.0",
   "description": "Xcraft 'peon' worker backends",
   "main": "index.js",
@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "file",
-    "url": "lib/xcraft-core-peon"
+    "url": "lib/xcraft-contrib-peon"
   },
   "author": "Mathieu Schroeter",
   "license": "MIT",
