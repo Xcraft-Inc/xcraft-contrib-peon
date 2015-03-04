@@ -15,11 +15,7 @@ var copy = function (location, root, extra, callback) {
     console.log ('copy ' + location + ' to ' + root);
     var stats = fs.lstatSync (location);
 
-    if (stats.isFile ()) {
-      xFs.cp (location, path.join (root, path.basename (location)));
-    } else {
-      xFs.cpdir (location, root);
-    }
+    xFs.cp (location, stats.isFile () ? path.join (root, path.basename (location)) : root);
   } catch (ex) {
     if (callback) {
       callback (ex.stack);
