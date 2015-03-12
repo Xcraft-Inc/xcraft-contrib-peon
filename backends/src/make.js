@@ -1,20 +1,15 @@
 'use strict';
 
-var path  = require ('path');
-var utils = require ('../../lib/utils.js');
+var path = require ('path');
+var base = require ('../../lib/base.js');
 
-var make = function (cache, root, extra, callback) {
-  if (extra.onlyPackaging || !extra.hasOwnProperty ('location')) {
-    callback ();
-    return;
-  }
-
+var make = function (cache, extra, callback) {
   var xProcess = require ('xcraft-core-process');
 
   console.log ('cache: ' + cache + ' ' + JSON.stringify (extra));
 
   var args = [
-    '-C', path.join (cache, extra.location),
+    '-C', cache,
     'all', 'install'
   ];
 
@@ -35,15 +30,7 @@ var make = function (cache, root, extra, callback) {
 };
 
 module.exports = function (srcUri, root, share, extra, callback) {
-  if (extra.onlyPackaging) {
-    delete extra.configure;
-  }
-
-  utils.prepare (srcUri, share, extra, function (err, data) {
-    if (err) {
-      callback (err);
-    } else {
-      make (data.location, root, data.extra, callback);
-    }
+  base.onlyBuild (srcUri, root, share, extra, callback, function (data, callback) {
+    make (data.fullLocation, data.extra, callback);
   });
 };
