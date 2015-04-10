@@ -29,8 +29,8 @@ var make = function (cache, extra, callback) {
   xProcess.spawn ('make', args, {}, callback);
 };
 
-module.exports = function (srcUri, root, share, extra, callback) {
-  base.onlyBuild (srcUri, root, share, extra, callback, function (data, callback) {
+module.exports = function (getObj, root, share, extra, callback) {
+  base.onlyBuild (getObj, root, share, extra, callback, function (data, callback) {
     make (data.fullLocation, data.extra, callback);
   });
 };

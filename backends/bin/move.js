@@ -14,8 +14,8 @@ var move = function (location, root, callback) {
   callback ();
 };
 
-module.exports = function (srcUri, root, share, extra, callback) {
-  base.always (srcUri, root, share, extra, callback, function (data, callback) {
+module.exports = function (getObj, root, share, extra, callback) {
+  base.always (getObj, root, share, extra, callback, function (data, callback) {
     move (data.fullLocation, root, callback);
   });
 };

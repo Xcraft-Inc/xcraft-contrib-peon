@@ -9,8 +9,8 @@ var spawn = function (bin, extra, callback) {
   xProcess.spawn (bin, extra.args, {}, callback);
 };
 
-module.exports = function (srcUri, root, share, extra, callback) {
-  base.onlyInstall (srcUri, root, share, extra, callback, function (data, callback) {
+module.exports = function (getObj, root, share, extra, callback) {
+  base.onlyInstall (getObj, root, share, extra, callback, function (data, callback) {
     spawn (data.fullLocation, data.extra, callback);
   });
 };
