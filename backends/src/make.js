@@ -4,7 +4,7 @@ var path = require ('path');
 var base = require ('../../lib/base.js');
 
 var make = function (cache, extra, callback) {
-  var xProcess = require ('xcraft-core-process');
+  var xProcess = require ('xcraft-core-process') ();
 
   console.log ('cache: ' + cache + ' ' + JSON.stringify (extra));
 
