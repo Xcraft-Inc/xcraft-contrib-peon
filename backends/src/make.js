@@ -8,6 +8,7 @@ var make = function (cache, extra, callback) {
 
   console.log ('cache: ' + cache + ' ' + JSON.stringify (extra));
 
+  var makeBin = 'make'; /* FIXME: or mingw32-make if MSYS is not needed */
   var args = [
     '-C', cache,
     'all', 'install'
@@ -26,7 +27,7 @@ var make = function (cache, extra, callback) {
   args.push ('CFLAGS=-I' + include);
 
   console.log (makeBin + ' ' + args.join (' '));
-  xProcess.spawn ('make', args, {}, callback);
+  xProcess.spawn (makeBin, args, {}, callback);
 };
 
 module.exports = function (getObj, root, share, extra, callback) {
