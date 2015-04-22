@@ -25,7 +25,7 @@ var make = function (cache, extra, callback) {
   args.push ('LDFLAGS=-L' + lib);
   args.push ('CFLAGS=-I' + include);
 
-  console.log ('make -C ' + path.join (cache, extra.location) + ' ' + args.join (' '));
+  console.log (makeBin + ' ' + args.join (' '));
   xProcess.spawn ('make', args, {}, callback);
 };
 
