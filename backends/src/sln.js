@@ -3,21 +3,63 @@
 var base = require ('../../lib/base.js');
 
 var msbuild = function (cache, extra, callback) {
-  var xProcess = require ('xcraft-core-process') ();
+  var fs    = require ('fs');
+  var path  = require ('path');
+  var async = require ('async');
+
+  var xProcess  = require ('xcraft-core-process') ();
+  var xPlatform = require ('xcraft-core-platform');
 
   console.log ('cache: ' + cache + ' ' + JSON.stringify (extra));
 
   var makeBin = 'msbuild'; /* FIXME: or xbuild if msbuild is not found */
-  var args = [
-    cache
-  ];
+  var subst = null;
 
-  if (extra.args) {
-    args = args.concat (extra.args);
-  }
+  async.auto ({
+    mount: function (callback) {
+      var dir = cache;
+      var file = null;
 
-  console.log (makeBin + ' ' + args.join (' '));
-  xProcess.spawn (makeBin, args, {}, callback);
+      if (fs.statSync (dir).isFile ()) {
+        dir  = path.dirname (cache);
+        file = path.basename (cache);
+      }
+
+      console.log ('mount ' + dir);
+      subst = new xPlatform.Subst (dir);
+      subst.mount (function (err, drive) {
+        if (err) {
+          callback (err);
+          return;
+        }
+
+        callback (null, path.join (drive, file));
+      });
+    },
+
+    make: ['mount', function (callback, results) {
+      var args = [results.mount];
+
+      if (extra.args) {
+        args = args.concat (extra.args);
+      }
+
+      console.log (makeBin + ' ' + args.join (' '));
+      xProcess.spawn (makeBin, args, {}, callback);
+    }],
+
+    umount: ['make', function (callback, results) {
+      if (!subst) {
+        callback ();
+        return;
+      }
+
+      console.log ('umount ' + results.mount);
+      subst.umount (callback);
+    }]
+  }, function (err) {
+    callback (err);
+  });
 };
 
 module.exports = function (getObj, root, share, extra, callback) {
