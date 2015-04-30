@@ -7,8 +7,8 @@ var msbuild = function (cache, extra, callback) {
   var path  = require ('path');
   var async = require ('async');
 
-  var xProcess  = require ('xcraft-core-process') ();
-  var xPlatform = require ('xcraft-core-platform');
+  var xProcess = require ('xcraft-core-process') ();
+  var Subst    = require ('xcraft-core-subst');
 
   console.log ('cache: ' + cache + ' ' + JSON.stringify (extra));
 
@@ -26,7 +26,7 @@ var msbuild = function (cache, extra, callback) {
       }
 
       console.log ('mount ' + dir);
-      subst = new xPlatform.Subst (dir);
+      subst = new Subst (dir);
       subst.mount (function (err, drive) {
         if (err) {
           callback (err);
