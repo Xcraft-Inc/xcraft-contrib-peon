@@ -4,14 +4,15 @@ var path = require ('path');
 var base = require ('../../lib/base.js');
 
 var make = function (cache, extra, callback) {
+  var async    = require ('async');
   var xProcess = require ('xcraft-core-process') ();
 
   console.log ('cache: ' + cache + ' ' + JSON.stringify (extra));
 
   var makeBin = 'make'; /* FIXME: or mingw32-make if MSYS is not needed */
   var args = [
-    '-C', cache,
-    'all', 'install'
+    null,
+    '-C', cache
   ];
 
   if (extra.args) {
@@ -26,8 +27,22 @@ var make = function (cache, extra, callback) {
   args.push ('LDFLAGS=-L' + lib);
   args.push ('CFLAGS=-I' + include);
 
-  console.log (makeBin + ' ' + args.join (' '));
-  xProcess.spawn (makeBin, args, {}, callback);
+  async.series ([
+    function (callback) {
+      args[0] = 'all';
+
+      console.log (makeBin + ' ' + args.join (' '));
+      xProcess.spawn (makeBin, args, {}, callback);
+    },
+
+    function (callback) {
+      args[0] = 'install';
+      args.push ('-j1');
+
+      console.log (makeBin + ' ' + args.join (' '));
+      xProcess.spawn (makeBin, args, {}, callback);
+    }
+  ], callback);
 };
 
 module.exports = function (getObj, root, share, extra, callback) {
