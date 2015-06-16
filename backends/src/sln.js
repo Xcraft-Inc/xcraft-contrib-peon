@@ -5,63 +5,40 @@ var base = require ('../../lib/base.js');
 var msbuild = function (cache, extra, callback) {
   var fs    = require ('fs');
   var path  = require ('path');
-  var async = require ('async');
 
   var xProcess = require ('xcraft-core-process') ({
     parser: 'msbuild'
   });
-  var Subst    = require ('xcraft-core-subst').Subst;
 
   console.log ('cache: ' + cache + ' ' + JSON.stringify (extra));
 
   var makeBin = 'msbuild'; /* FIXME: or xbuild if msbuild is not found */
-  var subst = null;
 
-  async.auto ({
-    mount: function (callback) {
-      var dir = cache;
-      var file = null;
+  var subst = require ('xcraft-core-subst').wrap;
 
-      if (fs.statSync (dir).isFile ()) {
-        dir  = path.dirname (cache);
-        file = path.basename (cache);
-      }
+  var dir = cache;
+  var file = null;
 
-      console.log ('mount ' + dir);
-      subst = new Subst (dir);
-      subst.mount (function (err, drive) {
-        if (err) {
-          callback (err);
-          return;
-        }
+  if (fs.statSync (dir).isFile ()) {
+    dir  = path.dirname (cache);
+    file = path.basename (cache);
+  }
 
-        callback (null, path.join (drive, file));
-      });
-    },
+  subst.wrap (dir, function (err, dest, callback) {
+    if (err) {
+      callback (err);
+      return;
+    }
 
-    make: ['mount', function (callback, results) {
-      var args = [results.mount];
+    var args = [path.join (dest, file)];
 
-      if (extra.args) {
-        args = args.concat (extra.args);
-      }
+    if (extra.args) {
+      args = args.concat (extra.args);
+    }
 
-      console.log (makeBin + ' ' + args.join (' '));
-      xProcess.spawn (makeBin, args, {}, callback);
-    }],
-
-    umount: ['make', function (callback, results) {
-      if (!subst) {
-        callback ();
-        return;
-      }
-
-      console.log ('umount ' + results.mount);
-      subst.umount (callback);
-    }]
-  }, function (err) {
-    callback (err);
-  });
+    console.log (makeBin + ' ' + args.join (' '));
+    xProcess.spawn (makeBin, args, {}, callback);
+  }, callback);
 };
 
 module.exports = function (getObj, root, share, extra, callback) {
