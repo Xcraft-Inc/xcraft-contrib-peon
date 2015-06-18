@@ -14,7 +14,7 @@ var msbuild = function (cache, extra, callback) {
 
   var makeBin = 'msbuild'; /* FIXME: or xbuild if msbuild is not found */
 
-  var subst = require ('xcraft-core-subst').wrap;
+  var subst = require ('xcraft-core-subst');
 
   var dir = cache;
   var file = null;
