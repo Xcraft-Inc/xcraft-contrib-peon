@@ -1,13 +1,18 @@
 'use strict';
 
+var moduleName = 'peon/make';
+
 var path = require ('path');
 var base = require ('../../lib/base.js');
+
+var xLog = require ('xcraft-core-log') (moduleName);
+
 
 var make = function (cache, extra, callback) {
   var async    = require ('async');
   var xProcess = require ('xcraft-core-process') ();
 
-  console.log ('cache: ' + cache + ' ' + JSON.stringify (extra));
+  xLog.verb ('Cache: ' + cache + ' ' + JSON.stringify (extra));
 
   var makeBin = 'make'; /* FIXME: or mingw32-make if MSYS is not needed */
   var args = [
@@ -32,7 +37,7 @@ var make = function (cache, extra, callback) {
 
       makeArgs.unshift ('all');
 
-      console.log (makeBin + ' ' + makeArgs.join (' '));
+      xLog.verb (makeBin + ' ' + makeArgs.join (' '));
       xProcess.spawn (makeBin, makeArgs, {}, callback);
     },
 
@@ -42,7 +47,7 @@ var make = function (cache, extra, callback) {
       makeArgs.unshift ('install');
       makeArgs.push ('-j1');
 
-      console.log (makeBin + ' ' + makeArgs.join (' '));
+      xLog.verb (makeBin + ' ' + makeArgs.join (' '));
       xProcess.spawn (makeBin, makeArgs, {}, callback);
     }
   ], callback);

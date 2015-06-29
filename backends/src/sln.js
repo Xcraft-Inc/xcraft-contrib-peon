@@ -1,6 +1,11 @@
 'use strict';
 
+var moduleName = 'peon/sln';
+
 var base = require ('../../lib/base.js');
+
+var xLog = require ('xcraft-core-log') (moduleName);
+
 
 var msbuild = function (cache, extra, callback) {
   var fs    = require ('fs');
@@ -10,7 +15,7 @@ var msbuild = function (cache, extra, callback) {
     parser: 'msbuild'
   });
 
-  console.log ('cache: ' + cache + ' ' + JSON.stringify (extra));
+  xLog.verb ('Cache: ' + cache + ' ' + JSON.stringify (extra));
 
   var makeBin = 'msbuild'; /* FIXME: or xbuild if msbuild is not found */
 
@@ -36,7 +41,7 @@ var msbuild = function (cache, extra, callback) {
       args = args.concat (extra.args);
     }
 
-    console.log (makeBin + ' ' + args.join (' '));
+    xLog.verb (makeBin + ' ' + args.join (' '));
     xProcess.spawn (makeBin, args, {}, callback);
   }, callback);
 };

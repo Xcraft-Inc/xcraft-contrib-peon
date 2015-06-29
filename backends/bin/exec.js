@@ -1,11 +1,16 @@
 'use strict';
 
+var moduleName = 'peon/exec';
+
 var base = require ('../../lib/base.js');
+
+var xLog = require ('xcraft-core-log') (moduleName);
+
 
 var spawn = function (bin, extra, callback) {
   var xProcess = require ('xcraft-core-process') ();
 
-  console.log ('spawn %s %s', bin, extra.args.join (' '));
+  xLog.verb ('Spawn %s %s', bin, extra.args.join (' '));
   xProcess.spawn (bin, extra.args, {}, callback);
 };
 
