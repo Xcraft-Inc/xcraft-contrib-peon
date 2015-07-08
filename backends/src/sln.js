@@ -12,7 +12,8 @@ var msbuild = function (cache, extra, callback) {
   var path  = require ('path');
 
   var xProcess = require ('xcraft-core-process') ({
-    parser: 'msbuild'
+    forwarder: 'msbuild',
+    parser:    'msbuild'
   });
 
   xLog.verb ('Cache: ' + cache + ' ' + JSON.stringify (extra));
