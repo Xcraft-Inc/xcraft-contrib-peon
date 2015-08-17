@@ -19,17 +19,33 @@ var make = function (cache, extra, callback) {
     '-C', cache
   ];
 
-  if (extra.args) {
-    args = args.concat (extra.args);
-  }
-
   /* FIXME: find a more generic way & pkg-config */
   var wpkgRoot = process.env.WPKG_ROOTDIR;
   var lib     = path.join (wpkgRoot, 'usr/lib/');
   var include = path.join (wpkgRoot, 'usr/include/');
+  var flags = {
+    CFLAGS:  '-I' + include,
+    LDFLAGS: '-L' + lib
+  };
 
-  args.push ('LDFLAGS=-L' + lib);
-  args.push ('CFLAGS=-I' + include);
+  if (extra.args) {
+    extra.args.forEach (function (arg) {
+      var res = /^(CFLAGS|LDFLAGS)=(.*)/.exec (arg);
+      if (!res) {
+        args.push (arg);
+        return;
+      }
+
+      flags[res[1]] = res[2].length ? res[2] : null;
+    });
+  }
+
+  if (flags.CFLAGS) {
+    args.push ('CFLAGS=' + flags.CFLAGS);
+  }
+  if (flags.LDFLAGS) {
+    args.push ('LDFLAGS=' + flags.LDFLAGS);
+  }
 
   async.series ([
     function (callback) {
