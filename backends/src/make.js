@@ -15,7 +15,7 @@ var make = function (cache, extra, callback) {
   xLog.verb ('Cache: ' + cache + ' ' + JSON.stringify (extra));
 
   var makeBin = 'make'; /* FIXME: or mingw32-make if MSYS is not needed */
-  var args = [
+  var globalArgs = [
     '-C', cache
   ];
 
@@ -23,44 +23,49 @@ var make = function (cache, extra, callback) {
   var wpkgRoot = process.env.WPKG_ROOTDIR;
   var lib     = path.join (wpkgRoot, 'usr/lib/');
   var include = path.join (wpkgRoot, 'usr/include/');
-  var flags = {
-    CFLAGS:  '-I' + include,
-    LDFLAGS: '-L' + lib
+
+  var fixFlags = function (args) {
+    var flags = {
+      CFLAGS:  '-I' + include,
+      LDFLAGS: '-L' + lib
+    };
+
+    var newArgs = globalArgs.slice ();
+
+    if (args) {
+      args.forEach (function (arg) {
+        var res = /^(CFLAGS|LDFLAGS)=(.*)/.exec (arg);
+        if (!res) {
+          newArgs.push (arg);
+          return;
+        }
+
+        flags[res[1]] = res[2].length ? res[2] : null;
+      });
+    }
+
+    if (flags.CFLAGS) {
+      newArgs.push ('CFLAGS=' + flags.CFLAGS);
+    }
+    if (flags.LDFLAGS) {
+      newArgs.push ('LDFLAGS=' + flags.LDFLAGS);
+    }
+
+    return newArgs;
   };
-
-  if (extra.args) {
-    extra.args.forEach (function (arg) {
-      var res = /^(CFLAGS|LDFLAGS)=(.*)/.exec (arg);
-      if (!res) {
-        args.push (arg);
-        return;
-      }
-
-      flags[res[1]] = res[2].length ? res[2] : null;
-    });
-  }
-
-  if (flags.CFLAGS) {
-    args.push ('CFLAGS=' + flags.CFLAGS);
-  }
-  if (flags.LDFLAGS) {
-    args.push ('LDFLAGS=' + flags.LDFLAGS);
-  }
 
   async.series ([
     function (callback) {
-      var makeArgs = args.slice ();
-
-      makeArgs.unshift ('all');
+      var makeArgs = fixFlags (extra.args.all);
 
       xLog.verb (makeBin + ' ' + makeArgs.join (' '));
       xProcess.spawn (makeBin, makeArgs, {}, callback);
     },
 
     function (callback) {
-      var makeArgs = args.slice ();
+      var makeArgs = fixFlags (extra.args.install);
 
-      makeArgs.unshift ('install');
+      /* Prevent bug with jobserver and deployment. */
       makeArgs.push ('-j1');
 
       xLog.verb (makeBin + ' ' + makeArgs.join (' '));
