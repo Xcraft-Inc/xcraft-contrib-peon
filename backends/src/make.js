@@ -12,7 +12,7 @@ var make = function (cache, extra, callback) {
   var async    = require ('async');
   var xProcess = require ('xcraft-core-process') ();
 
-  xLog.verb ('Cache: ' + cache + ' ' + JSON.stringify (extra));
+  xLog.verb ('cache: ' + cache + ' ' + JSON.stringify (extra));
 
   var makeBin = 'make'; /* FIXME: or mingw32-make if MSYS is not needed */
   var globalArgs = [

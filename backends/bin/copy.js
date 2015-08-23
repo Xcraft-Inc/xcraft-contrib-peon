@@ -12,7 +12,7 @@ var copy = function (location, root, callback) {
   var fs  = require ('fs');
   var xFs = require ('xcraft-core-fs');
 
-  xLog.verb ('Copy ' + location + ' to ' + root);
+  xLog.verb ('copy ' + location + ' to ' + root);
   var stats = fs.lstatSync (location);
 
   xFs.cp (location, stats.isFile () ? path.join (root, path.basename (location)) : root);

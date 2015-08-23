@@ -16,7 +16,7 @@ var msbuild = function (cache, extra, callback) {
     parser:    'msbuild'
   });
 
-  xLog.verb ('Cache: ' + cache + ' ' + JSON.stringify (extra));
+  xLog.verb ('cache: ' + cache + ' ' + JSON.stringify (extra));
 
   var makeBin = 'msbuild'; /* FIXME: or xbuild if msbuild is not found */
 
