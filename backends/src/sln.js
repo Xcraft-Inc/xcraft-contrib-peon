@@ -38,8 +38,8 @@ var msbuild = function (cache, extra, callback) {
 
     var args = [path.join (dest, file)];
 
-    if (extra.args) {
-      args = args.concat (extra.args);
+    if (extra.args.all) {
+      args = args.concat (extra.args.all);
     }
 
     xLog.verb (makeBin + ' ' + args.join (' '));

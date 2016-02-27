@@ -10,8 +10,8 @@ var xLog = require ('xcraft-core-log') (moduleName);
 var spawn = function (bin, extra, callback) {
   var xProcess = require ('xcraft-core-process') ();
 
-  xLog.verb ('spawn %s %s', bin, extra.args.join (' '));
-  xProcess.spawn (bin, extra.args, {}, callback);
+  xLog.verb ('spawn %s %s', bin, extra.args.all.join (' '));
+  xProcess.spawn (bin, extra.args.all, {}, callback);
 };
 
 module.exports = function (getObj, root, share, extra, callback) {
