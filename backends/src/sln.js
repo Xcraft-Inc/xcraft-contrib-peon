@@ -1,22 +1,20 @@
 'use strict';
 
-var moduleName = 'peon/sln';
-
 var base = require ('../../lib/base.js');
 
-var xLog = require ('xcraft-core-log') (moduleName);
 
-
-var msbuild = function (cache, extra, callback) {
+var msbuild = function (cache, extra, response, callback) {
   var fs    = require ('fs');
   var path  = require ('path');
 
   var xProcess = require ('xcraft-core-process') ({
+    logger:    'xlog',
     forwarder: 'msbuild',
-    parser:    'msbuild'
+    parser:    'msbuild',
+    response:  response
   });
 
-  xLog.verb ('cache: ' + cache + ' ' + JSON.stringify (extra));
+  response.log.verb ('cache: ' + cache + ' ' + JSON.stringify (extra));
 
   var makeBin = 'msbuild'; /* FIXME: or xbuild if msbuild is not found */
 
@@ -30,7 +28,7 @@ var msbuild = function (cache, extra, callback) {
     file = path.basename (cache);
   }
 
-  xSubst.wrap (dir, function (err, dest, callback) {
+  xSubst.wrap (dir, response, function (err, dest, callback) {
     if (err) {
       callback (err);
       return;
@@ -42,13 +40,13 @@ var msbuild = function (cache, extra, callback) {
       args = args.concat (extra.args.all);
     }
 
-    xLog.verb (makeBin + ' ' + args.join (' '));
+    response.log.verb (makeBin + ' ' + args.join (' '));
     xProcess.spawn (makeBin, args, {}, callback);
   }, callback);
 };
 
-module.exports = function (getObj, root, share, extra, callback) {
-  base.onlyBuild (getObj, root, share, extra, callback, function (data, callback) {
-    msbuild (data.fullLocation, data.extra, callback);
+module.exports = function (getObj, root, share, extra, response, callback) {
+  base.onlyBuild (getObj, root, share, extra, response, callback, function (data, callback) {
+    msbuild (data.fullLocation, data.extra, response, callback);
   });
 };

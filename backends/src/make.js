@@ -1,18 +1,17 @@
 'use strict';
 
-var moduleName = 'peon/make';
-
 var path = require ('path');
 var base = require ('../../lib/base.js');
 
-var xLog = require ('xcraft-core-log') (moduleName);
 
-
-var make = function (cache, extra, callback) {
+var make = function (cache, extra, response, callback) {
   var async    = require ('async');
-  var xProcess = require ('xcraft-core-process') ();
+  const xProcess = require ('xcraft-core-process') ({
+    logger: 'xlog',
+    response: response
+  });
 
-  xLog.verb ('cache: ' + cache + ' ' + JSON.stringify (extra));
+  response.log.verb ('cache: ' + cache + ' ' + JSON.stringify (extra));
 
   var makeBin = 'make'; /* FIXME: or mingw32-make if MSYS is not needed */
   var globalArgs = [
@@ -58,7 +57,7 @@ var make = function (cache, extra, callback) {
     function (callback) {
       var makeArgs = fixFlags (extra.args.all);
 
-      xLog.verb (makeBin + ' ' + makeArgs.join (' '));
+      response.log.verb (makeBin + ' ' + makeArgs.join (' '));
       xProcess.spawn (makeBin, makeArgs, {}, callback);
     },
 
@@ -68,14 +67,14 @@ var make = function (cache, extra, callback) {
       /* Prevent bug with jobserver and deployment. */
       makeArgs.push ('-j1');
 
-      xLog.verb (makeBin + ' ' + makeArgs.join (' '));
+      response.log.verb (makeBin + ' ' + makeArgs.join (' '));
       xProcess.spawn (makeBin, makeArgs, {}, callback);
     }
   ], callback);
 };
 
-module.exports = function (getObj, root, share, extra, callback) {
-  base.onlyBuild (getObj, root, share, extra, callback, function (data, callback) {
-    make (data.fullLocation, data.extra, callback);
+module.exports = function (getObj, root, share, extra, response, callback) {
+  base.onlyBuild (getObj, root, share, extra, response, callback, function (data, callback) {
+    make (data.fullLocation, data.extra, response, callback);
   });
 };
