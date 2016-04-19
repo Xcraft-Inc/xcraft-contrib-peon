@@ -6,7 +6,7 @@ var base = require ('../../lib/base.js');
 var spawn = function (bin, extra, response, callback) {
   const xProcess = require ('xcraft-core-process') ({
     logger: 'xlog',
-    response: response
+    resp:   response
   });
 
   response.log.verb ('spawn %s %s', bin, extra.args.all.join (' '));

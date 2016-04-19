@@ -11,7 +11,7 @@ var msbuild = function (cache, extra, response, callback) {
     logger:    'xlog',
     forwarder: 'msbuild',
     parser:    'msbuild',
-    response:  response
+    resp:      response
   });
 
   response.log.verb ('cache: ' + cache + ' ' + JSON.stringify (extra));

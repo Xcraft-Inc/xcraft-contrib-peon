@@ -8,7 +8,7 @@ var make = function (cache, extra, response, callback) {
   var async    = require ('async');
   const xProcess = require ('xcraft-core-process') ({
     logger: 'xlog',
-    response: response
+    resp:   response
   });
 
   response.log.verb ('cache: ' + cache + ' ' + JSON.stringify (extra));
