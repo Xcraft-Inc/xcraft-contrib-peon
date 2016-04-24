@@ -21,6 +21,7 @@
   "dependencies": {
     "async": "^1.4.0",
     "traverse": "^0.6.6",
+    "which": "^1.2.4",
     "xcraft-core-etc": "0.1.0",
     "xcraft-core-extract": "0.1.0",
     "xcraft-core-fs": "0.1.0",

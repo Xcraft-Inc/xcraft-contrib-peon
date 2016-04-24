@@ -1,5 +1,7 @@
 'use strict';
 
+const which = require ('which');
+
 var base = require ('../../lib/base.js');
 
 
@@ -16,7 +18,12 @@ var msbuild = function (cache, extra, response, callback) {
 
   response.log.verb ('cache: ' + cache + ' ' + JSON.stringify (extra));
 
-  var makeBin = 'msbuild'; /* FIXME: or xbuild if msbuild is not found */
+  let makeBin = 'msbuild';
+  try {
+    which.sync (makeBin);
+  } catch (ex) {
+    makeBin = 'xbuild';
+  }
 
   var xSubst = require ('xcraft-core-subst');
 
