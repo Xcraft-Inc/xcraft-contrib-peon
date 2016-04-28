@@ -18,15 +18,10 @@ var make = function (cache, extra, response, callback) {
     '-C', cache
   ];
 
-  /* FIXME: find a more generic way & pkg-config */
-  var wpkgRoot = process.env.WPKG_ROOTDIR;
-  var lib     = path.join (wpkgRoot, 'usr/lib/');
-  var include = path.join (wpkgRoot, 'usr/include/');
-
   var fixFlags = function (args) {
     var flags = {
-      CFLAGS:  '-I' + include,
-      LDFLAGS: '-L' + lib
+      CFLAGS: null,
+      LDFLAGS: null
     };
 
     var newArgs = globalArgs.slice ();
