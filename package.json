@@ -22,17 +22,17 @@
     "async": "^1.4.0",
     "traverse": "^0.6.6",
     "which": "^1.2.4",
-    "xcraft-core-etc": "0.1.0",
-    "xcraft-core-extract": "0.1.0",
-    "xcraft-core-fs": "0.1.0",
-    "xcraft-core-http": "0.1.0",
-    "xcraft-core-log": "0.1.0",
-    "xcraft-core-placeholder": "0.1.0",
-    "xcraft-core-platform": "0.1.0",
-    "xcraft-core-process": "0.1.0",
-    "xcraft-core-scm": "0.1.0",
-    "xcraft-core-subst": "0.1.0",
-    "xcraft-core-utils": "0.1.0"
+    "xcraft-core-etc": "^1.0.0",
+    "xcraft-core-extract": "^1.0.0",
+    "xcraft-core-fs": "^1.0.0",
+    "xcraft-core-http": "^1.0.0",
+    "xcraft-core-log": "^1.0.0",
+    "xcraft-core-placeholder": "^1.0.0",
+    "xcraft-core-platform": "^1.0.0",
+    "xcraft-core-process": "^1.0.0",
+    "xcraft-core-scm": "^1.0.0",
+    "xcraft-core-subst": "^1.0.0",
+    "xcraft-core-utils": "^1.0.0"
   },
   "devDependencies": {}
 }
