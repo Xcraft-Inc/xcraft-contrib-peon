@@ -1,6 +1,5 @@
 'use strict';
 
-var path = require ('path');
 var base = require ('../../lib/base.js');
 
 
