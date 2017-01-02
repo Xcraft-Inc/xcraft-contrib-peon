@@ -30,9 +30,9 @@ var msbuild = function (cache, extra, response, callback) {
   var dir = cache;
   var file = null;
 
-  if (fs.statSync (dir).isFile ()) {
-    dir  = path.dirname (cache);
-    file = path.basename (cache);
+  if (extra.args.all.length &&
+      fs.statSync (path.join (dir, extra.args.all[0])).isFile ()) {
+    file = extra.args.all.shift ();
   }
 
   xSubst.wrap (dir, response, function (err, dest, callback) {
