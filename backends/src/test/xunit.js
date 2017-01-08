@@ -36,7 +36,7 @@ const xunit = function (cache, extra, response, callback) {
 
     if (extra.args.test) {
       args = args.concat (extra.args.test);
-      args.push ('-parallel', 'none');
+      args.push ('-parallel', 'none', '-appveyor');
     }
 
     response.log.verb (testBin + ' ' + args.join (' '));
