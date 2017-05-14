@@ -1,7 +1,7 @@
 'use strict';
 
 var path = require ('path');
-var xFs  = require ('xcraft-core-fs');
+var xFs = require ('xcraft-core-fs');
 
 var backendsRoot = path.join (__dirname, 'backends');
 var backends = {};
@@ -18,13 +18,17 @@ backendsType.forEach (function (type) {
   });
 
   const backendsSubType = xFs.lsdir (typeRoot);
-  backendsSubType.forEach ((subType) => {
+  backendsSubType.forEach (subType => {
     const backendsSubCmd = xFs.ls (path.join (typeRoot, subType), /\.js$/);
 
     backends[type][subType] = {};
-    backendsSubCmd.forEach ((cmd) => {
+    backendsSubCmd.forEach (cmd => {
       const cmdName = cmd.replace (/\.js$/, '');
-      backends[type][subType][cmdName] = require (path.join (typeRoot, subType, cmd));
+      backends[type][subType][cmdName] = require (path.join (
+        typeRoot,
+        subType,
+        cmd
+      ));
     });
   });
 });
