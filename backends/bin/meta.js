@@ -1,13 +1,13 @@
 'use strict';
 
-var base = require ('../../lib/base.js');
+var base = require('../../lib/base.js');
 
-module.exports = function (getObj, root, share, extra, response, callback) {
-  base.always (getObj, root, share, extra, response, callback, function (
+module.exports = function(getObj, root, share, extra, response, callback) {
+  base.always(getObj, root, share, extra, response, callback, function(
     data,
     callback
   ) {
-    response.log.info ('meta package');
-    callback ();
+    response.log.info('meta package');
+    callback();
   });
 };
