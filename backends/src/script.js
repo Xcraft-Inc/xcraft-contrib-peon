@@ -1,6 +1,6 @@
 'use strict';
 
-const watt = require('watt');
+const watt = require('gigawatts');
 const base = require('../../lib/base.js');
 
 const script = watt(function*(cache, extra, response, next) {
