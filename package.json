@@ -6,7 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["xcraft", "backend", "worker", "peon"],
+  "keywords": [
+    "xcraft",
+    "backend",
+    "worker",
+    "peon"
+  ],
   "repository": {
     "type": "file",
     "url": "lib/xcraft-contrib-peon"
@@ -32,6 +37,9 @@
     "xcraft-core-utils": "^2.0.0"
   },
   "devDependencies": {
-    "xcraft-dev-rules": "^0.4.0"
-  }
+    "prettier": "1.18.2",
+    "xcraft-dev-prettier": "^1.0.0",
+    "xcraft-dev-rules": "^1.0.0"
+  },
+  "prettier": "xcraft-dev-prettier"
 }
