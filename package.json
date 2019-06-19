@@ -26,7 +26,7 @@
     "which": "^1.2.4",
     "xcraft-core-etc": "^2.0.0",
     "xcraft-core-extract": "^1.0.0",
-    "xcraft-core-fs": "^1.0.0",
+    "xcraft-core-fs": "^2.0.0",
     "xcraft-core-http": "^1.0.0",
     "xcraft-core-log": "^1.0.0",
     "xcraft-core-placeholder": "^1.0.0",
