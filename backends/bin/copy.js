@@ -3,11 +3,11 @@
 var path = require('path');
 var base = require('../../lib/base.js');
 
-var copy = function(location, root, response, callback) {
+var copy = function(location, root, resp, callback) {
   var fs = require('fs');
   var xFs = require('xcraft-core-fs');
 
-  response.log.verb('copy ' + location + ' to ' + root);
+  resp.log.verb('copy ' + location + ' to ' + root);
   var stats = fs.lstatSync(location);
 
   xFs.cp(
@@ -17,11 +17,11 @@ var copy = function(location, root, response, callback) {
   callback();
 };
 
-module.exports = function(getObj, root, share, extra, response, callback) {
-  base.always(getObj, root, share, extra, response, callback, function(
+module.exports = function(getObj, root, share, extra, resp, callback) {
+  base.always(getObj, root, share, extra, resp, callback, function(
     data,
     callback
   ) {
-    copy(data.fullLocation, root, response, callback);
+    copy(data.fullLocation, root, resp, callback);
   });
 };

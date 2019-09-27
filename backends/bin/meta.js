@@ -2,12 +2,12 @@
 
 var base = require('../../lib/base.js');
 
-module.exports = function(getObj, root, share, extra, response, callback) {
-  base.always(getObj, root, share, extra, response, callback, function(
+module.exports = function(getObj, root, share, extra, resp, callback) {
+  base.always(getObj, root, share, extra, resp, callback, function(
     data,
     callback
   ) {
-    response.log.info('meta package');
+    resp.log.info('meta package');
     callback();
   });
 };

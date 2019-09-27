@@ -3,8 +3,8 @@
 const watt = require('gigawatts');
 const base = require('../../lib/base.js');
 
-const script = watt(function*(cache, extra, response, next) {
-  response.log.verb('cache: ' + cache + ' ' + JSON.stringify(extra));
+const script = watt(function*(cache, extra, resp, next) {
+  resp.log.verb('cache: ' + cache + ' ' + JSON.stringify(extra));
 
   const interpreter = require('../../lib/interpreter.js');
 
@@ -23,10 +23,10 @@ const script = watt(function*(cache, extra, response, next) {
 
   try {
     if (extra.args.all) {
-      yield interpreter.run(getArgs(extra.args.all), response, next);
+      yield interpreter.run(getArgs(extra.args.all), resp, next);
     }
     if (extra.args.install) {
-      yield interpreter.run(getArgs(extra.args.install), response, next);
+      yield interpreter.run(getArgs(extra.args.install), resp, next);
     }
   } catch (ex) {
     throw ex;
@@ -35,12 +35,12 @@ const script = watt(function*(cache, extra, response, next) {
   }
 });
 
-module.exports = function(getObj, root, share, extra, response, callback) {
+module.exports = function(getObj, root, share, extra, resp, callback) {
   extra._rulesTypeDir = __dirname;
-  base.onlyBuild(getObj, root, share, extra, response, callback, function(
+  base.onlyBuild(getObj, root, share, extra, resp, callback, function(
     data,
     callback
   ) {
-    script(data.fullLocation, data.extra, response, callback);
+    script(data.fullLocation, data.extra, resp, callback);
   });
 };

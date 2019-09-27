@@ -1,6 +1,6 @@
 'use strict';
 
-const xunit = function(cache, extra, response, callback) {
+const xunit = function(cache, extra, resp, callback) {
   const fs = require('fs');
   const path = require('path');
 
@@ -8,10 +8,10 @@ const xunit = function(cache, extra, response, callback) {
     logger: 'xlog',
     //    forwarder: 'msbuild',
     //    parser:    'msbuild',
-    resp: response,
+    resp,
   });
 
-  response.log.verb('cache: ' + cache + ' ' + JSON.stringify(extra));
+  resp.log.verb('cache: ' + cache + ' ' + JSON.stringify(extra));
 
   const testBin = 'xunit.console';
 
@@ -29,7 +29,7 @@ const xunit = function(cache, extra, response, callback) {
 
   xSubst.wrap(
     dir,
-    response,
+    resp,
     (err, dest, callback) => {
       if (err) {
         callback(err);
@@ -43,13 +43,13 @@ const xunit = function(cache, extra, response, callback) {
         args.push('-parallel', 'none', '-verbose');
       }
 
-      response.log.verb(testBin + ' ' + args.join(' '));
+      resp.log.verb(testBin + ' ' + args.join(' '));
       xProcess.spawn(testBin, args, {}, callback);
     },
     callback
   );
 };
 
-module.exports = function(data, extra, response, callback) {
-  xunit(data.fullLocation, extra, response, callback);
+module.exports = function(data, extra, resp, callback) {
+  xunit(data.fullLocation, extra, resp, callback);
 };

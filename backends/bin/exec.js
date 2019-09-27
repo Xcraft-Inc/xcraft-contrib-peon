@@ -5,24 +5,24 @@ const xSubst = require('xcraft-core-subst');
 
 var base = require('../../lib/base.js');
 
-var spawn = function(bin, extra, response, callback) {
+var spawn = function(bin, extra, resp, callback) {
   const xProcess = require('xcraft-core-process')({
     logger: 'xlog',
-    resp: response,
+    resp,
   });
 
-  response.log.verb('spawn %s %s', bin, extra.args.all.join(' '));
+  resp.log.verb('spawn %s %s', bin, extra.args.all.join(' '));
   xProcess.spawn(bin, extra.args.all, {}, callback);
 };
 
-module.exports = function(getObj, root, share, extra, response, callback) {
-  base.onlyInstall(getObj, root, share, extra, response, callback, function(
+module.exports = function(getObj, root, share, extra, resp, callback) {
+  base.onlyInstall(getObj, root, share, extra, resp, callback, function(
     data,
     callback
   ) {
     xSubst.wrap(
       data.location,
-      response,
+      resp,
       (err, dest, callback) => {
         if (err) {
           callback(err);
@@ -30,7 +30,7 @@ module.exports = function(getObj, root, share, extra, response, callback) {
         }
 
         const location = path.join(dest, data.extra.location);
-        spawn(location, data.extra, response, callback);
+        spawn(location, data.extra, resp, callback);
       },
       callback
     );
