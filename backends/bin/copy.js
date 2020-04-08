@@ -3,7 +3,7 @@
 var path = require('path');
 var base = require('../../lib/base.js');
 
-var copy = function(location, root, resp, callback) {
+var copy = function (location, root, resp, callback) {
   var fs = require('fs');
   var xFs = require('xcraft-core-fs');
 
@@ -17,8 +17,8 @@ var copy = function(location, root, resp, callback) {
   callback();
 };
 
-module.exports = function(getObj, root, share, extra, resp, callback) {
-  base.always(getObj, root, share, extra, resp, callback, function(
+module.exports = function (getObj, root, share, extra, resp, callback) {
+  base.always(getObj, root, share, extra, resp, callback, function (
     data,
     callback
   ) {

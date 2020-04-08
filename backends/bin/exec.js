@@ -5,7 +5,7 @@ const xSubst = require('xcraft-core-subst');
 
 var base = require('../../lib/base.js');
 
-var spawn = function(bin, extra, resp, callback) {
+var spawn = function (bin, extra, resp, callback) {
   const xProcess = require('xcraft-core-process')({
     logger: 'xlog',
     resp,
@@ -15,8 +15,8 @@ var spawn = function(bin, extra, resp, callback) {
   xProcess.spawn(bin, extra.args.all, {}, callback);
 };
 
-module.exports = function(getObj, root, share, extra, resp, callback) {
-  base.onlyInstall(getObj, root, share, extra, resp, callback, function(
+module.exports = function (getObj, root, share, extra, resp, callback) {
+  base.onlyInstall(getObj, root, share, extra, resp, callback, function (
     data,
     callback
   ) {

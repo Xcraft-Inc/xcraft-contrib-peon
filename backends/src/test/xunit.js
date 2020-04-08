@@ -1,6 +1,6 @@
 'use strict';
 
-const xunit = function(cache, extra, resp, callback) {
+const xunit = function (cache, extra, resp, callback) {
   const fs = require('fs');
   const path = require('path');
 
@@ -50,6 +50,6 @@ const xunit = function(cache, extra, resp, callback) {
   );
 };
 
-module.exports = function(data, extra, resp, callback) {
+module.exports = function (data, extra, resp, callback) {
   xunit(data.fullLocation, extra, resp, callback);
 };

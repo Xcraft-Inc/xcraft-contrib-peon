@@ -3,7 +3,7 @@
 const watt = require('gigawatts');
 const base = require('../../lib/base.js');
 
-const script = watt(function*(cache, extra, resp, next) {
+const script = watt(function* (cache, extra, resp, next) {
   resp.log.verb('cache: ' + cache + ' ' + JSON.stringify(extra));
 
   const interpreter = require('../../lib/interpreter.js');
@@ -11,7 +11,7 @@ const script = watt(function*(cache, extra, resp, next) {
   const currentDir = process.cwd();
   process.chdir(cache);
 
-  const getArgs = args => {
+  const getArgs = (args) => {
     if (!args) {
       return;
     }
@@ -35,9 +35,9 @@ const script = watt(function*(cache, extra, resp, next) {
   }
 });
 
-module.exports = function(getObj, root, share, extra, resp, callback) {
+module.exports = function (getObj, root, share, extra, resp, callback) {
   extra._rulesTypeDir = __dirname;
-  base.onlyBuild(getObj, root, share, extra, resp, callback, function(
+  base.onlyBuild(getObj, root, share, extra, resp, callback, function (
     data,
     callback
   ) {

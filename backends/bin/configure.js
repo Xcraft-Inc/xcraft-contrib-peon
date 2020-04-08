@@ -4,7 +4,7 @@ const watt = require('gigawatts');
 const base = require('../../lib/base.js');
 const helpers = require('xcraft-core-env/lib/helpers.js');
 
-const script = watt(function*(cache, extra, resp, next) {
+const script = watt(function* (cache, extra, resp, next) {
   resp.log.verb('cache: ' + cache + ' ' + JSON.stringify(extra));
 
   const interpreter = require('../../lib/interpreter.js');
@@ -12,7 +12,7 @@ const script = watt(function*(cache, extra, resp, next) {
   const currentDir = process.cwd();
   process.chdir(cache);
 
-  const getArgs = args => {
+  const getArgs = (args) => {
     if (!args) {
       return;
     }
@@ -37,8 +37,8 @@ const script = watt(function*(cache, extra, resp, next) {
   }
 });
 
-module.exports = function(getObj, root, share, extra, resp, callback) {
-  base.onlyInstall(getObj, root, share, extra, resp, callback, function(
+module.exports = function (getObj, root, share, extra, resp, callback) {
+  base.onlyInstall(getObj, root, share, extra, resp, callback, function (
     data,
     callback
   ) {

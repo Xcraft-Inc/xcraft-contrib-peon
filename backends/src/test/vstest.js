@@ -1,6 +1,6 @@
 'use strict';
 
-const vstest = function(cache, extra, resp, callback) {
+const vstest = function (cache, extra, resp, callback) {
   const fs = require('fs');
   const path = require('path');
 
@@ -49,6 +49,6 @@ const vstest = function(cache, extra, resp, callback) {
   );
 };
 
-module.exports = function(data, extra, resp, callback) {
+module.exports = function (data, extra, resp, callback) {
   vstest(data.fullLocation, extra, resp, callback);
 };

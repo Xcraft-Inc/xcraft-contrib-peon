@@ -2,7 +2,7 @@
 
 var base = require('../../lib/base.js');
 
-var make = function(cache, extra, resp, callback) {
+var make = function (cache, extra, resp, callback) {
   var async = require('async');
   const xProcess = require('xcraft-core-process')({
     logger: 'xlog',
@@ -14,7 +14,7 @@ var make = function(cache, extra, resp, callback) {
   var makeBin = 'make'; /* FIXME: or mingw32-make if MSYS is not needed */
   var globalArgs = ['-C', cache];
 
-  var fixFlags = function(args) {
+  var fixFlags = function (args) {
     var flags = {
       CFLAGS: null,
       LDFLAGS: null,
@@ -23,7 +23,7 @@ var make = function(cache, extra, resp, callback) {
     var newArgs = globalArgs.slice();
 
     if (args) {
-      args.forEach(function(arg) {
+      args.forEach(function (arg) {
         var res = /^(CFLAGS|LDFLAGS)=(.*)/.exec(arg);
         if (!res) {
           newArgs.push(arg);
@@ -46,14 +46,14 @@ var make = function(cache, extra, resp, callback) {
 
   async.series(
     [
-      function(callback) {
+      function (callback) {
         var makeArgs = fixFlags(extra.args.all);
 
         resp.log.verb(makeBin + ' ' + makeArgs.join(' '));
         xProcess.spawn(makeBin, makeArgs, {}, callback);
       },
 
-      function(callback) {
+      function (callback) {
         var makeArgs = fixFlags(extra.args.install);
 
         /* Prevent bug with jobserver and deployment. */
@@ -67,9 +67,9 @@ var make = function(cache, extra, resp, callback) {
   );
 };
 
-module.exports = function(getObj, root, share, extra, resp, callback) {
+module.exports = function (getObj, root, share, extra, resp, callback) {
   extra._rulesTypeDir = __dirname;
-  base.onlyBuild(getObj, root, share, extra, resp, callback, function(
+  base.onlyBuild(getObj, root, share, extra, resp, callback, function (
     data,
     callback
   ) {

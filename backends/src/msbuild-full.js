@@ -3,9 +3,9 @@
 const base = require('../../lib/base.js');
 const msbuild = require('../../lib/backends/src/msbuild.js')(false);
 
-module.exports = function(getObj, root, share, extra, resp, callback) {
+module.exports = function (getObj, root, share, extra, resp, callback) {
   extra._rulesTypeDir = __dirname;
-  base.onlyBuild(getObj, root, share, extra, resp, callback, function(
+  base.onlyBuild(getObj, root, share, extra, resp, callback, function (
     data,
     callback
   ) {
