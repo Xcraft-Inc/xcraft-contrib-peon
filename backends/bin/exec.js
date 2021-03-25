@@ -11,8 +11,21 @@ var spawn = function (bin, extra, resp, callback) {
     resp,
   });
 
-  resp.log.verb('spawn %s %s', bin, extra.args.all.join(' '));
-  xProcess.spawn(bin, extra.args.all, {}, callback);
+  let args = extra.args.all;
+  let codes = [0];
+  if (/^<=-?[0-9]+(?:;-?[0-9]+)*$/.test(extra.args.all[0])) {
+    args = extra.args.all.slice(1);
+    codes = extra.args.all[0].substring(2).split(';');
+  }
+
+  resp.log.verb('spawn %s <= %s %s', codes.join(';'), bin, args.join(' '));
+  xProcess.spawn(bin, args, {}, (err, code) => {
+    if (codes.indexOf(code) !== -1) {
+      callback(err, code);
+    } else {
+      callback(null, code);
+    }
+  });
 };
 
 module.exports = function (getObj, root, share, extra, resp, callback) {
