@@ -30,8 +30,6 @@ const script = watt(function* (cache, extra, resp, next) {
       );
       yield interpreter.run(script, resp, next);
     }
-  } catch (ex) {
-    throw ex;
   } finally {
     process.chdir(currentDir);
   }
