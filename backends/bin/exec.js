@@ -19,7 +19,7 @@ var spawn = function (bin, extra, resp, callback) {
   }
 
   resp.log.verb('spawn %s <= %s %s', codes.join(';'), bin, args.join(' '));
-  xProcess.spawn(bin, args, {}, (err, code) => {
+  xProcess.spawn(bin, args, {env: extra.env || process.env}, (err, code) => {
     if (codes.indexOf(code) !== -1) {
       callback(err, code);
     } else {

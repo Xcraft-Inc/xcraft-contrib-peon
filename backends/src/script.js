@@ -23,10 +23,10 @@ const script = watt(function* (cache, extra, resp, next) {
 
   try {
     if (extra.args.all) {
-      yield interpreter.run(getArgs(extra.args.all), resp, next);
+      yield interpreter.run(getArgs(extra.args.all), extra.env, resp, next);
     }
     if (extra.args.install) {
-      yield interpreter.run(getArgs(extra.args.install), resp, next);
+      yield interpreter.run(getArgs(extra.args.install), extra.env, resp, next);
     }
   } catch (ex) {
     throw ex;

@@ -50,7 +50,12 @@ var make = function (cache, extra, resp, callback) {
         var makeArgs = fixFlags(extra.args.all);
 
         resp.log.verb(makeBin + ' ' + makeArgs.join(' '));
-        xProcess.spawn(makeBin, makeArgs, {}, callback);
+        xProcess.spawn(
+          makeBin,
+          makeArgs,
+          {env: extra.env || process.env},
+          callback
+        );
       },
 
       function (callback) {
@@ -60,7 +65,12 @@ var make = function (cache, extra, resp, callback) {
         makeArgs.push('-j1');
 
         resp.log.verb(makeBin + ' ' + makeArgs.join(' '));
-        xProcess.spawn(makeBin, makeArgs, {}, callback);
+        xProcess.spawn(
+          makeBin,
+          makeArgs,
+          {env: extra.env || process.env},
+          callback
+        );
       },
     ],
     callback

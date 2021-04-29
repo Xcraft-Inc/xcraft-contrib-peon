@@ -28,7 +28,7 @@ const script = watt(function* (cache, extra, resp, next) {
         getArgs(extra.args.all),
         extra.distribution
       );
-      yield interpreter.run(script, resp, next);
+      yield interpreter.run(script, extra.env, resp, next);
     }
   } finally {
     process.chdir(currentDir);
