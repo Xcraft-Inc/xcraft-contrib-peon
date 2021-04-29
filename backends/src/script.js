@@ -28,8 +28,6 @@ const script = watt(function* (cache, extra, resp, next) {
     if (extra.args.install) {
       yield interpreter.run(getArgs(extra.args.install), extra.env, resp, next);
     }
-  } catch (ex) {
-    throw ex;
   } finally {
     process.chdir(currentDir);
   }
