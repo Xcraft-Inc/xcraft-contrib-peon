@@ -12,9 +12,8 @@ var make = function (cache, extra, resp, callback) {
   resp.log.verb('cache: ' + cache + ' ' + JSON.stringify(extra));
 
   var makeBin = 'make'; /* FIXME: or mingw32-make if MSYS is not needed */
-  var globalArgs = ['-C', cache];
 
-  var fixFlags = function (args) {
+  var fixFlags = function (globalArgs, args) {
     var flags = {
       CFLAGS: null,
       LDFLAGS: null,
@@ -44,35 +43,51 @@ var make = function (cache, extra, resp, callback) {
     return newArgs;
   };
 
-  async.series(
-    [
-      function (callback) {
-        var makeArgs = fixFlags(extra.args.all);
+  const xSubst = require('xcraft-core-subst');
 
-        resp.log.verb(makeBin + ' ' + makeArgs.join(' '));
-        xProcess.spawn(
-          makeBin,
-          makeArgs,
-          {env: extra.env || process.env},
-          callback
-        );
-      },
+  xSubst.wrap(
+    cache,
+    resp,
+    (err, dest, callback) => {
+      if (err) {
+        callback(err);
+        return;
+      }
 
-      function (callback) {
-        var makeArgs = fixFlags(extra.args.install);
+      const globalArgs = ['-C', dest];
 
-        /* Prevent bug with jobserver and deployment. */
-        makeArgs.push('-j1');
+      async.series(
+        [
+          function (callback) {
+            var makeArgs = fixFlags(globalArgs, extra.args.all);
 
-        resp.log.verb(makeBin + ' ' + makeArgs.join(' '));
-        xProcess.spawn(
-          makeBin,
-          makeArgs,
-          {env: extra.env || process.env},
-          callback
-        );
-      },
-    ],
+            resp.log.verb(makeBin + ' ' + makeArgs.join(' '));
+            xProcess.spawn(
+              makeBin,
+              makeArgs,
+              {env: extra.env || process.env},
+              callback
+            );
+          },
+
+          function (callback) {
+            var makeArgs = fixFlags(globalArgs, extra.args.install);
+
+            /* Prevent bug with jobserver and deployment. */
+            makeArgs.push('-j1');
+
+            resp.log.verb(makeBin + ' ' + makeArgs.join(' '));
+            xProcess.spawn(
+              makeBin,
+              makeArgs,
+              {env: extra.env || process.env},
+              callback
+            );
+          },
+        ],
+        callback
+      );
+    },
     callback
   );
 };
