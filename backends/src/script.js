@@ -2,8 +2,9 @@
 
 const watt = require('gigawatts');
 const base = require('../../lib/base.js');
+const xSubst = require('xcraft-core-subst');
 
-const script = watt(function* (cache, extra, resp, next) {
+const _script = watt(function* (cache, extra, resp, next) {
   resp.log.verb('cache: ' + cache + ' ' + JSON.stringify(extra));
 
   const interpreter = require('../../lib/interpreter.js');
@@ -31,6 +32,15 @@ const script = watt(function* (cache, extra, resp, next) {
   } finally {
     process.chdir(currentDir);
   }
+});
+
+const script = watt(function* (cache, extra, resp, next) {
+  return yield xSubst.wrap(
+    cache,
+    resp,
+    (err, dest, next) => _script(dest, extra, resp, next),
+    next
+  );
 });
 
 module.exports = function (getObj, root, share, extra, resp, callback) {
