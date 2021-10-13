@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 var base = require('../../lib/base.js');
 
 var make = function (share, cache, extra, resp, callback) {
@@ -45,8 +46,12 @@ var make = function (share, cache, extra, resp, callback) {
 
   const xSubst = require('xcraft-core-subst');
 
+  let _cache = path.relative(share, cache);
+  _cache = _cache.split(path.sep);
+  const forSubst = path.join(share, _cache[0]);
+
   xSubst.wrap(
-    share,
+    forSubst,
     resp,
     (err, dest, callback) => {
       if (err) {
@@ -54,6 +59,7 @@ var make = function (share, cache, extra, resp, callback) {
         return;
       }
 
+      dest = path.join(dest, ..._cache.slice(1));
       const globalArgs = ['-C', dest];
 
       async.series(
