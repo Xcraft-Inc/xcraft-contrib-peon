@@ -2,7 +2,7 @@
 
 var base = require('../../lib/base.js');
 
-var make = function (cache, extra, resp, callback) {
+var make = function (share, cache, extra, resp, callback) {
   var async = require('async');
   const xProcess = require('xcraft-core-process')({
     logger: 'xlog',
@@ -46,7 +46,7 @@ var make = function (cache, extra, resp, callback) {
   const xSubst = require('xcraft-core-subst');
 
   xSubst.wrap(
-    cache,
+    share,
     resp,
     (err, dest, callback) => {
       if (err) {
@@ -98,6 +98,6 @@ module.exports = function (getObj, root, share, extra, resp, callback) {
     data,
     callback
   ) {
-    make(data.fullLocation, data.extra, resp, callback);
+    make(share, data.fullLocation, data.extra, resp, callback);
   });
 };
