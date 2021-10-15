@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const watt = require('gigawatts');
 const base = require('../../lib/base.js');
 const xSubst = require('xcraft-core-subst');
@@ -34,11 +35,18 @@ const _script = watt(function* (cache, extra, resp, next) {
   }
 });
 
-const script = watt(function* (cache, extra, resp, next) {
+const script = watt(function* (share, cache, extra, resp, next) {
+  let _cache = path.relative(share, cache);
+  _cache = _cache.split(path.sep);
+  const forSubst = path.join(share, _cache[0]);
+
   return yield xSubst.wrap(
-    cache,
+    forSubst,
     resp,
-    (err, dest, next) => _script(dest, extra, resp, next),
+    (err, dest, next) => {
+      dest = path.join(dest, ..._cache.slice(1));
+      _script(dest, extra, resp, next);
+    },
     next
   );
 });
@@ -49,6 +57,6 @@ module.exports = function (getObj, root, share, extra, resp, callback) {
     data,
     callback
   ) {
-    script(data.fullLocation, data.extra, resp, callback);
+    script(share, data.fullLocation, data.extra, resp, callback);
   });
 };
