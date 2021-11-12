@@ -50,6 +50,8 @@ var make = function (share, cache, extra, resp, callback) {
   _cache = _cache.split(path.sep);
   const forSubst = path.join(share, _cache[0]);
 
+  const cwd = process.cwd();
+
   xSubst.wrap(
     forSubst,
     resp,
@@ -61,6 +63,8 @@ var make = function (share, cache, extra, resp, callback) {
 
       dest = path.join(dest, ..._cache.slice(1));
       const globalArgs = ['-C', dest];
+
+      process.chdir(dest);
 
       async.series(
         [
@@ -94,7 +98,10 @@ var make = function (share, cache, extra, resp, callback) {
         callback
       );
     },
-    callback
+    (...args) => {
+      process.chdir(cwd);
+      callback(...args);
+    }
   );
 };
 
