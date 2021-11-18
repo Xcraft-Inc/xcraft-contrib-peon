@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const watt = require('gigawatts');
 const {wrapTmp} = require('xcraft-core-subst');
 const base = require('../../lib/base.js');
@@ -15,8 +16,9 @@ module.exports = watt(function* (getObj, root, share, extra, resp, next) {
     resp,
     next,
     (data, callback) => {
-      const {dest, unwrap} = wrapTmp(data.fullLocation, resp);
-      msbuild(dest, data.extra, resp, (err) => {
+      const {dest, unwrap} = wrapTmp(share, resp);
+      const location = path.join(dest, path.relative(share, data.fullLocation));
+      msbuild(location, data.extra, resp, (err) => {
         unwrap();
         callback(err);
       });
