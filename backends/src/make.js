@@ -1,9 +1,10 @@
 'use strict';
 
-const path = require('path');
-var base = require('../../lib/base.js');
+const watt = require('gigawatts');
+const base = require('../../lib/base.js');
+const {wrapTmp} = require('xcraft-core-subst');
 
-var make = function (share, cache, extra, resp, callback) {
+var make = function (cache, extra, resp, callback) {
   var async = require('async');
   const xProcess = require('xcraft-core-process')({
     logger: 'xlog',
@@ -44,60 +45,40 @@ var make = function (share, cache, extra, resp, callback) {
     return newArgs;
   };
 
-  const xSubst = require('xcraft-core-subst');
-
-  let _cache = path.relative(share, cache);
-  _cache = _cache.split(path.sep);
-  const forSubst = path.join(share, _cache[0]);
-
   const cwd = process.cwd();
 
-  xSubst.wrap(
-    forSubst,
-    resp,
-    (err, dest, callback) => {
-      if (err) {
-        callback(err);
-        return;
-      }
+  const globalArgs = ['-C', cache];
+  process.chdir(cache);
 
-      dest = path.join(dest, ..._cache.slice(1));
-      const globalArgs = ['-C', dest];
+  async.series(
+    [
+      function (callback) {
+        var makeArgs = fixFlags(globalArgs, extra.args.all);
 
-      process.chdir(dest);
+        resp.log.verb(makeBin + ' ' + makeArgs.join(' '));
+        xProcess.spawn(
+          makeBin,
+          makeArgs,
+          {env: extra.env || process.env},
+          callback
+        );
+      },
 
-      async.series(
-        [
-          function (callback) {
-            var makeArgs = fixFlags(globalArgs, extra.args.all);
+      function (callback) {
+        var makeArgs = fixFlags(globalArgs, extra.args.install);
 
-            resp.log.verb(makeBin + ' ' + makeArgs.join(' '));
-            xProcess.spawn(
-              makeBin,
-              makeArgs,
-              {env: extra.env || process.env},
-              callback
-            );
-          },
+        /* Prevent bug with jobserver and deployment. */
+        makeArgs.push('-j1');
 
-          function (callback) {
-            var makeArgs = fixFlags(globalArgs, extra.args.install);
-
-            /* Prevent bug with jobserver and deployment. */
-            makeArgs.push('-j1');
-
-            resp.log.verb(makeBin + ' ' + makeArgs.join(' '));
-            xProcess.spawn(
-              makeBin,
-              makeArgs,
-              {env: extra.env || process.env},
-              callback
-            );
-          },
-        ],
-        callback
-      );
-    },
+        resp.log.verb(makeBin + ' ' + makeArgs.join(' '));
+        xProcess.spawn(
+          makeBin,
+          makeArgs,
+          {env: extra.env || process.env},
+          callback
+        );
+      },
+    ],
     (...args) => {
       process.chdir(cwd);
       callback(...args);
@@ -105,12 +86,25 @@ var make = function (share, cache, extra, resp, callback) {
   );
 };
 
-module.exports = function (getObj, root, share, extra, resp, callback) {
+module.exports = watt(function* (getObj, root, share, extra, resp, next) {
   extra._rulesTypeDir = __dirname;
-  base.onlyBuild(getObj, root, share, extra, resp, callback, function (
-    data,
-    callback
-  ) {
-    make(share, data.fullLocation, data.extra, resp, callback);
-  });
-};
+  yield base.onlyBuild(
+    getObj,
+    root,
+    share,
+    extra,
+    resp,
+    next,
+    watt(function* (err, data) {
+      if (err) {
+        throw err;
+      }
+      const {dest, unwrap} = wrapTmp(data.fullLocation, resp);
+      try {
+        yield make(dest, data.extra, resp, next);
+      } finally {
+        unwrap();
+      }
+    })
+  );
+});
