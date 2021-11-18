@@ -19,7 +19,6 @@ var move = function (location, root, resp, callback) {
 
 module.exports = function (getObj, root, share, extra, resp, callback) {
   base.always(getObj, root, share, extra, resp, callback, function (
-    err,
     data,
     callback
   ) {

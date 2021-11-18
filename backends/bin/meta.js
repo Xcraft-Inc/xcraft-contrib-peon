@@ -4,7 +4,6 @@ var base = require('../../lib/base.js');
 
 module.exports = function (getObj, root, share, extra, resp, callback) {
   base.always(getObj, root, share, extra, resp, callback, function (
-    err,
     data,
     callback
   ) {

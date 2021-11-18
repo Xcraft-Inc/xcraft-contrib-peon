@@ -95,16 +95,12 @@ module.exports = watt(function* (getObj, root, share, extra, resp, next) {
     extra,
     resp,
     next,
-    watt(function* (err, data) {
-      if (err) {
-        throw err;
-      }
+    (data, callback) => {
       const {dest, unwrap} = wrapTmp(data.fullLocation, resp);
-      try {
-        yield make(dest, data.extra, resp, next);
-      } finally {
+      make(dest, data.extra, resp, (err) => {
         unwrap();
-      }
-    })
+        callback(err);
+      });
+    }
   );
 });

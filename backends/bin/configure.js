@@ -37,7 +37,6 @@ const script = watt(function* (cache, extra, resp, next) {
 
 module.exports = function (getObj, root, share, extra, resp, callback) {
   base.onlyInstall(getObj, root, share, extra, resp, callback, function (
-    err,
     data,
     callback
   ) {
