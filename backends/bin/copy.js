@@ -1,5 +1,6 @@
 'use strict';
 
+const watt = require('gigawatts');
 var path = require('path');
 var base = require('../../lib/base.js');
 
@@ -17,11 +18,13 @@ var copy = function (location, root, resp, callback) {
   callback();
 };
 
-module.exports = function (getObj, root, share, extra, resp, callback) {
-  base.always(getObj, root, share, extra, resp, callback, function (
-    data,
-    callback
-  ) {
-    copy(data.fullLocation, root, resp, callback);
-  });
-};
+module.exports = watt(function* (getObj, root, share, extra, resp) {
+  return yield base.always(
+    (data, callback) => copy(data.fullLocation, root, resp, callback),
+    getObj,
+    root,
+    share,
+    extra,
+    resp
+  );
+});

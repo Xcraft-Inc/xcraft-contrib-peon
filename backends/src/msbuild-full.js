@@ -8,13 +8,7 @@ const msbuild = require('../../lib/backends/src/msbuild.js')(false);
 
 module.exports = watt(function* (getObj, root, share, extra, resp, next) {
   extra._rulesTypeDir = __dirname;
-  yield base.onlyBuild(
-    getObj,
-    root,
-    share,
-    extra,
-    resp,
-    next,
+  return yield base.onlyBuild(
     (data, callback) => {
       const {dest, unwrap} = wrapTmp(share, resp);
       const location = path.join(dest, path.relative(share, data.fullLocation));
@@ -22,6 +16,11 @@ module.exports = watt(function* (getObj, root, share, extra, resp, next) {
         unwrap();
         callback(err);
       });
-    }
+    },
+    getObj,
+    root,
+    share,
+    extra,
+    resp
   );
 });

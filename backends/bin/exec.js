@@ -1,5 +1,6 @@
 'use strict';
 
+const watt = require('gigawatts');
 const path = require('path');
 const xSubst = require('xcraft-core-subst');
 
@@ -28,24 +29,28 @@ var spawn = function (bin, extra, resp, callback) {
   });
 };
 
-module.exports = function (getObj, root, share, extra, resp, callback) {
-  base.onlyInstall(getObj, root, share, extra, resp, callback, function (
-    data,
-    callback
-  ) {
-    xSubst.wrap(
-      data.location,
-      resp,
-      (err, dest, callback) => {
-        if (err) {
-          callback(err);
-          return;
-        }
+module.exports = watt(function* (getObj, root, share, extra, resp) {
+  return yield base.onlyInstall(
+    (data, callback) => {
+      xSubst.wrap(
+        data.location,
+        resp,
+        (err, dest, callback) => {
+          if (err) {
+            callback(err);
+            return;
+          }
 
-        const location = path.join(dest, data.extra.location);
-        spawn(location, data.extra, resp, callback);
-      },
-      callback
-    );
-  });
-};
+          const location = path.join(dest, data.extra.location);
+          spawn(location, data.extra, resp, callback);
+        },
+        callback
+      );
+    },
+    getObj,
+    root,
+    share,
+    extra,
+    resp
+  );
+});

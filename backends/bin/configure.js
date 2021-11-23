@@ -35,12 +35,16 @@ const script = watt(function* (cache, extra, resp, next) {
   }
 });
 
-module.exports = function (getObj, root, share, extra, resp, callback) {
-  base.onlyInstall(getObj, root, share, extra, resp, callback, function (
-    data,
-    callback
-  ) {
-    resp.log.info('configure package');
-    script(data.fullLocation, data.extra, resp, callback);
-  });
-};
+module.exports = watt(function* (getObj, root, share, extra, resp) {
+  return yield base.onlyInstall(
+    (data, callback) => {
+      resp.log.info('configure package');
+      script(data.fullLocation, data.extra, resp, callback);
+    },
+    getObj,
+    root,
+    share,
+    extra,
+    resp
+  );
+});
