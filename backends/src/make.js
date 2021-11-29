@@ -93,10 +93,7 @@ module.exports = watt(function* (getObj, root, share, extra, resp) {
     (data, callback) => {
       const {dest, unwrap} = wrapTmp(share, resp);
       const location = path.join(dest, path.relative(share, data.fullLocation));
-      make(location, data.extra, resp, (err) => {
-        unwrap();
-        callback(err);
-      });
+      make(location, data.extra, resp, (err) => unwrap(() => callback(err)));
     },
     getObj,
     root,

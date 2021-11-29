@@ -35,16 +35,13 @@ const script = watt(function* (cache, extra, resp, next) {
   }
 });
 
-module.exports = watt(function* (getObj, root, share, extra, resp, next) {
+module.exports = watt(function* (getObj, root, share, extra, resp) {
   extra._rulesTypeDir = __dirname;
   return yield base.onlyBuild(
     (data, callback) => {
       const {dest, unwrap} = wrapTmp(share, resp);
       const location = path.join(dest, path.relative(share, data.fullLocation));
-      script(location, data.extra, resp, (err) => {
-        unwrap();
-        callback(err);
-      });
+      script(location, data.extra, resp, (err) => unwrap(() => callback(err)));
     },
     getObj,
     root,
