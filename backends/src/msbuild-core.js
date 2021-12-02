@@ -10,7 +10,7 @@ module.exports = watt(function* (getObj, root, share, extra, resp) {
   extra._rulesTypeDir = __dirname;
   return yield base.onlyBuild(
     (data, callback) => {
-      const {dest, unwrap} = wrapTmp(share, resp);
+      const {dest, unwrap} = wrapTmp(share, 'build', resp);
       const location = path.join(dest, path.relative(share, data.fullLocation));
       msbuild(location, data.extra, resp, (err) => unwrap(() => callback(err)));
     },
