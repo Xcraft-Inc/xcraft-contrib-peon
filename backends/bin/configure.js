@@ -5,7 +5,10 @@ const base = require('../../lib/base.js');
 const helpers = require('xcraft-core-env/lib/helpers.js');
 
 const script = watt(function* (cache, extra, resp, next) {
-  resp.log.verb('cache: ' + cache + ' ' + JSON.stringify(extra));
+  resp.log.verb('cache: ' + cache);
+  resp.log.verb(
+    JSON.stringify(extra, (key, value) => (key === 'env' ? '...' : value))
+  );
 
   const interpreter = require('../../lib/interpreter.js');
 

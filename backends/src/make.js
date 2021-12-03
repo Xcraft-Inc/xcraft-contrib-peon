@@ -12,7 +12,10 @@ var make = function (cache, extra, resp, callback) {
     resp,
   });
 
-  resp.log.verb('cache: ' + cache + ' ' + JSON.stringify(extra));
+  resp.log.verb('cache: ' + cache);
+  resp.log.verb(
+    JSON.stringify(extra, (key, value) => (key === 'env' ? '...' : value))
+  );
 
   var makeBin = 'make'; /* FIXME: or mingw32-make if MSYS is not needed */
 
