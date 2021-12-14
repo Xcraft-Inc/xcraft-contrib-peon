@@ -1,6 +1,6 @@
 {
   "name": "xcraft-contrib-peon",
-  "version": "0.5.18",
+  "version": "0.5.19",
   "description": "Xcraft 'peon' worker backends",
   "main": "index.js",
   "scripts": {
