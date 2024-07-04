@@ -24,7 +24,6 @@
     "fs-extra": "^9.1.0",
     "isbinaryfile": "^3.0.1",
     "js-yaml": "^3.9.0",
-    "traverse": "^0.6.6",
     "gigawatts": "^4.0.5",
     "which": "^2.0.2",
     "xcraft-contrib-pacman": "^1.0.0",
@@ -40,7 +39,8 @@
     "xcraft-core-process": "^1.0.0",
     "xcraft-core-scm": "^1.0.0",
     "xcraft-core-subst": "^1.0.0",
-    "xcraft-core-utils": "^4.0.0"
+    "xcraft-core-utils": "^4.0.0",
+    "xcraft-traverse": "^0.7.0"
   },
   "devDependencies": {
     "prettier": "2.0.4",
