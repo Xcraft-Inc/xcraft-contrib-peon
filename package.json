@@ -21,7 +21,7 @@
   "dependencies": {
     "async": "^1.4.0",
     "clone": "^2.1.2",
-    "fs-extra": "^9.1.0",
+    "fs-extra": "^11.3.0",
     "isbinaryfile": "^3.0.1",
     "js-yaml": "^3.9.0",
     "gigawatts": "^4.0.5",
