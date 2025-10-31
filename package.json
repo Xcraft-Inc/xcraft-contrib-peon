@@ -44,7 +44,7 @@
     "xcraft-core-process": "^1.0.0",
     "xcraft-core-scm": "^1.0.0",
     "xcraft-core-subst": "^1.0.0",
-    "xcraft-core-utils": "^4.0.0",
+    "xcraft-core-utils": "^4.19.0",
     "xcraft-traverse": "^0.7.0"
   },
   "devDependencies": {
